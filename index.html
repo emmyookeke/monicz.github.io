@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monicz Exclusive</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    html, body, #root { height: 100%; }
+
+    body {
+      position: relative;
+      background:
+        radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 32%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.06), transparent 26%),
+        linear-gradient(180deg, #111111 0%, #161616 45%, #101010 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background-image:
+        linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.3;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(96, 165, 250, 0.12), transparent 18%),
+        radial-gradient(circle at 88% 24%, rgba(14, 165, 233, 0.1), transparent 20%),
+        radial-gradient(circle at 28% 82%, rgba(59, 130, 246, 0.08), transparent 16%),
+        radial-gradient(circle at 74% 78%, rgba(34, 211, 238, 0.08), transparent 18%);
+      filter: blur(26px);
+      opacity: 0.55;
+    }
+
+    #root {
+      position: relative;
+      z-index: 1;
+    }
+
+    .splash-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+      animation: splashGridDrift 16s linear infinite;
+    }
+
+    .splash-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(16px);
+      opacity: 0.28;
+      animation: splashFloat 8s ease-in-out infinite;
+    }
+
+    .splash-chip {
+      position: absolute;
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      background: rgba(30, 41, 59, 0.18);
+      box-shadow: 0 0 24px rgba(59, 130, 246, 0.16);
+      backdrop-filter: blur(3px);
+      animation: splashChipPulse 6s ease-in-out infinite;
+    }
+
+    .splash-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.85), transparent);
+      box-shadow: 0 0 12px rgba(96, 165, 250, 0.4);
+      animation: splashLineScan 7s linear infinite;
+    }
+
+    .splash-node {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background: #60a5fa;
+      box-shadow: 0 0 14px rgba(96, 165, 250, 0.75);
+      animation: splashNodeBlink 2.8s ease-in-out infinite;
+    }
+
+    @keyframes splashGridDrift {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(0, 44px, 0); }
+    }
+
+    @keyframes splashFloat {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -24px, 0) scale(1.08); }
+    }
+
+    @keyframes splashChipPulse {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0.5; }
+      50% { transform: translate3d(0, -10px, 0) rotate(4deg); opacity: 1; }
+    }
+
+    @keyframes splashLineScan {
+      0% { transform: translateX(-20px); opacity: 0; }
+      20%, 80% { opacity: 1; }
+      100% { transform: translateX(50px); opacity: 0; }
+    }
+
+    @keyframes splashNodeBlink {
+      0%, 100% { opacity: 0.35; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    input[type="date"],
+    input[type="week"],
+    input[type="month"] {
+      color-scheme: dark;
+    }
+
+    /* Style native calendar/time pickers (all views) */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="week"]::-webkit-calendar-picker-indicator,
+    input[type="month"]::-webkit-calendar-picker-indicator {
+      color: white;
+      background: #ffffff !important;
+      filter: none !important;
+      border-radius: 4px;
+      padding: 2px;
+      opacity: 1 !important;
+    }
+
+    input[type="date"]::-webkit-datetime-edit,
+    input[type="week"]::-webkit-datetime-edit,
+    input[type="month"]::-webkit-datetime-edit {
+      color: white;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+    input[type="week"]::-webkit-datetime-edit-fields-wrapper,
+    input[type="month"]::-webkit-datetime-edit-fields-wrapper {
+      color: white;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-text,
+    input[type="week"]::-webkit-datetime-edit-text,
+    input[type="month"]::-webkit-datetime-edit-text {
+      color: white;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-month-field,
+    input[type="date"]::-webkit-datetime-edit-day-field,
+    input[type="date"]::-webkit-datetime-edit-year-field,
+    input[type="week"]::-webkit-datetime-edit-week-field,
+    input[type="week"]::-webkit-datetime-edit-year-field,
+    input[type="month"]::-webkit-datetime-edit-month-field,
+    input[type="month"]::-webkit-datetime-edit-year-field {
+      color: white;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator:hover,
+    input[type="week"]::-webkit-calendar-picker-indicator:hover,
+    input[type="month"]::-webkit-calendar-picker-indicator:hover {
+      background: #ffffff !important;
+      opacity: 1 !important;
+    }
+
+    /* Keep white picker icons on mobile too */
+    @media (max-width: 640px) {
+      input[type="date"]::-webkit-calendar-picker-indicator,
+      input[type="week"]::-webkit-calendar-picker-indicator,
+      input[type="month"]::-webkit-calendar-picker-indicator {
+        background: #ffffff !important;
+        filter: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-[#1E1E1E]">
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="env,react">
+
+  // ------------------------------
+  // Google Sheet backend service
+  // ------------------------------
+  const GS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyAKILwCdBfjUjGh7aYSJXmrtltGKhBITUsYBwHc0rBltmhcwvF2VVkhDk5UV-znXGu/exec";
+
+  async function postJSONSimple(url, payload) {
+    const r = await fetch(url, { method: "POST", body: JSON.stringify(payload) });
+    const text = await r.text();
+    let j;
+    try { j = JSON.parse(text); }
+    catch { throw new Error("Non-JSON response from script: " + text.slice(0,120)); }
+    return j;
+  }
+
+  const GSSvc = {
+    async fetchAll() {
+      const r = await fetch(`${GS_ENDPOINT}?action=fetchAll`);
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "fetchAll failed");
+
+      const products = (j.data.products || []).map(p => ({
+        ...p,
+        price: Number(p.price) || 0,
+        cost: Number(p.cost) || 0,
+        stock: Number(p.stock) || 0,
+        lowStock: Number(p.lowStock) || 0,
+        createdAt: p.createdAt || p.created_at || null,
+        updatedAt: p.updatedAt || p.updated_at || null,
+        stockHistory: (() => {
+          try {
+            const raw =
+              p.stockHistory_json ??
+              p.stock_history_json ??
+              p.stockHistory ??
+              "[]";
+            return Array.isArray(raw) ? raw : JSON.parse(raw);
+          } catch { return []; }
+        })(),
+      }));
+
+      const sales = (j.data.sales || []).map(s => ({
+        ...s,
+        total: Number(s.total) || 0,
+        items: (() => {
+          try { return JSON.parse(s.items_json || "[]"); }
+          catch { return []; }
+        })(),
+      }));
+
+      const expenses = (j.data.expenses || []).map(e => ({
+        ...e,
+        amount: Number(e.amount) || 0
+      }));
+
+      const years = j.data.years || [];
+      return { products, sales, expenses, years };
+    },
+
+    async saveProducts(products) {
+      const payload = products.map(p => ({
+        ...p,
+        stockHistory_json: JSON.stringify(p.stockHistory || []),
+      }));
+      const j = await postJSONSimple(GS_ENDPOINT, { action: "saveProducts", products: payload });
+      if (!j.ok) throw new Error(j.error || "saveProducts failed");
+    },
+
+    async addSale(sale) {
+      const j = await postJSONSimple(GS_ENDPOINT, { action: "addSale", sale });
+      if (!j.ok) throw new Error(j.error || "addSale failed");
+    },
+
+    async addExpense(expense) {
+      const j = await postJSONSimple(GS_ENDPOINT, { action: "addExpense", expense });
+      if (!j.ok) throw new Error(j.error || "addExpense failed");
+    },
+
+    async deleteProduct(id) {
+      const j = await postJSONSimple(GS_ENDPOINT, { action: "deleteProduct", id });
+      if (!j.ok) throw new Error(j.error || "deleteProduct failed");
+    },
+
+    async saveYears(years){
+      const j = await postJSONSimple(GS_ENDPOINT, { action:"saveyears", years });
+      if(!j.ok) throw new Error(j.error || "saveYears failed");
+    },
+  };
+
+  const { useEffect, useMemo, useRef, useState } = React;
+
+  function showSyncError(context, err) {
+    console.error(`${context} failed:`, err);
+    const msg = err?.message || (typeof err === 'string' ? err : JSON.stringify(err));
+    alert(`${context} failed:\n${msg}`);
+  }
+
+  // Icons
+  const ShoppingCart = (p) => <i className={`fa-solid fa-cart-shopping text-[20px] ${p.className||""}`}></i>;
+  const LogIn = (p) => <i className={`fa-solid fa-right-to-bracket text-[20px] ${p.className||""}`}></i>;
+  const LogOut = (p) => <i className={`fa-solid fa-right-from-bracket text-[20px] ${p.className||""}`}></i>;
+  const Package = (p) => <i className={`fa-solid fa-box text-[20px] ${p.className||""}`}></i>;
+  const BarChart3 = (p) => <i className={`fa-regular fa-chart-bar text-[20px] ${p.className||""}`}></i>;
+  const Wallet = (p) => <i className={`fa-solid fa-wallet text-[20px] ${p.className||""}`}></i>;
+  const AlertTriangle = (p) => <i className={`fa-solid fa-triangle-exclamation text-[20px] ${p.className||""}`}></i>;
+  const FileText = (p) => <i className={`fa-regular fa-file-lines text-[20px] ${p.className||""}`}></i>;
+  const History = (p) => <i className={`fa-solid fa-clock-rotate-left text-[20px] ${p.className||""}`}></i>;
+  const Plus = (p) => <i className={`fa-solid fa-plus text-[20px] ${p.className||""}`}></i>;
+  const Trash2 = (p) => <i className={`fa-solid fa-trash text-[20px] ${p.className||""}`}></i>;
+  const Edit3 = (p) => <i className={`fa-regular fa-pen-to-square text-[20px] ${p.className||""}`}></i>;
+  const Download = (p) => <i className={`fa-solid fa-download text-[20px] ${p.className||""}`}></i>;
+  const Upload = (p) => <i className={`fa-solid fa-upload text-[20px] ${p.className||""}`}></i>;
+  const ArrowLeft = (p) => <i className={`fa-solid fa-arrow-left text-[20px] ${p.className||""}`}></i>;
+
+  // ------------------------------
+  // Helpers & Storage
+  // ------------------------------
+  const LS_KEY = "monicz_exclusive_app_v1";
+  const nowISO = () => new Date().toISOString();
+  let pendingProductsScrollY = null;
+
+  const fmt = (n) =>
+    Number.isFinite(Number(n))
+      ? Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : "0.00";
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      delete parsed.historicalYears;
+      return parsed;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveState(state) {
+    const copy = { ...state };
+    delete copy.historicalYears;
+    localStorage.setItem(LS_KEY, JSON.stringify(copy));
+  }
+
+  function uid(prefix = "id") {
+    return `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
+  }
+
+  function getCartDraftItemCount(username) {
+    try {
+      const key = `monicz_exclusive_cart_draft_${String(username || "unknown").toLowerCase()}`;
+      const raw = localStorage.getItem(key);
+      if (!raw) return 0;
+      const parsed = JSON.parse(raw);
+      const cart = Array.isArray(parsed?.cart) ? parsed.cart : [];
+      return cart.reduce((sum, it) => sum + Math.max(0, Number(it?.qty) || 0), 0);
+    } catch {
+      return 0;
+    }
+  }
+
+  function withinDays(iso, days) {
+    const then = new Date(iso).getTime();
+    const diff = Date.now() - then;
+    return diff <= days * 24 * 60 * 60 * 1000;
+  }
+
+  function niceDateTime(iso) {
+    if (!iso) return "";
+    try { return new Date(iso).toLocaleString(); } catch { return String(iso); }
+  }
+
+  function toNum(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function dateOnlyFromISO(iso) {
+    try {
+      const d = new Date(iso);
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    } catch {
+      return "";
+    }
+  }
+
+  function startOfToday() {
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function startOfWeek(date = new Date()) {
+    const d = new Date(date);
+    d.setHours(0,0,0,0);
+    const day = d.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+    d.setDate(d.getDate() + diff);
+    return d;
+  }
+
+  function endOfWeek(date = new Date()) {
+    const d = startOfWeek(date);
+    d.setDate(d.getDate() + 7);
+    d.setMilliseconds(-1);
+    return d;
+  }
+
+  function startOfMonth(date = new Date()) {
+    return new Date(date.getFullYear(), date.getMonth(), 1, 0,0,0,0);
+  }
+
+  function endOfMonth(date = new Date()) {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0, 23,59,59,999);
+  }
+
+  function getISOWeekString(date = new Date()) {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2,"0")}`;
+  }
+
+  function getDateRangeFromWeekString(weekStr) {
+    if (!weekStr) return { start: null, end: null };
+    const [yearStr, weekPart] = weekStr.split("-W");
+    const year = Number(yearStr);
+    const week = Number(weekPart);
+    if (!year || !week) return { start: null, end: null };
+
+    const simple = new Date(year, 0, 1 + (week - 1) * 7);
+    const dow = simple.getDay();
+    const monday = new Date(simple);
+    if (dow <= 4 && dow !== 0) monday.setDate(simple.getDate() - simple.getDay() + 1);
+    else if (dow === 0) monday.setDate(simple.getDate() - 6);
+    else monday.setDate(simple.getDate() + 8 - simple.getDay());
+    monday.setHours(0,0,0,0);
+
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    sunday.setHours(23,59,59,999);
+
+    return { start: monday, end: sunday };
+  }
+
+  // CSV
+  function csvStringify(rows) {
+    if (!rows || !rows.length) return "";
+    const headers = Object.keys(rows[0]);
+    const esc = (v) => {
+      const s = v == null ? "" : String(v);
+      if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    };
+    return [headers.join(","), ...rows.map((r) => headers.map((h) => esc(r[h])).join(","))].join("\n");
+  }
+
+  function csvParse(text) {
+    const rows = [];
+    let i = 0, field = '', row = [], inQuotes = false;
+    function pushField() { row.push(field); field = ''; }
+    function pushRow() { rows.push(row); row = []; }
+    while (i < text.length) {
+      const c = text[i++];
+      if (inQuotes) {
+        if (c === '"') {
+          if (text[i] === '"') { field += '"'; i++; }
+          else { inQuotes = false; }
+        } else field += c;
+      } else {
+        if (c === '"') inQuotes = true;
+        else if (c === ',') pushField();
+        else if (c === '\n') { pushField(); pushRow(); }
+        else if (c === '\r') {}
+        else field += c;
+      }
+    }
+    pushField(); pushRow();
+    if (rows.length && rows[rows.length - 1].every((x) => x === '')) rows.pop();
+    return rows;
+  }
+
+  function csvToObjects(text) {
+    const matrix = csvParse(text);
+    if (!matrix.length) return [];
+    const headers = matrix[0].map((h) => h.trim());
+    return matrix.slice(1).map((cells) => {
+      const obj = {};
+      headers.forEach((h, idx) => (obj[h] = (cells[idx] ?? '').trim()));
+      return obj;
+    });
+  }
+
+  // ------------------------------
+  // Hash routing
+  // ------------------------------
+  function parseHash() {
+    const raw = (window.location.hash || "").replace(/^#/, "");
+    if (!raw || raw === "/") return { name: "main" };
+    const parts = raw.split("/").filter(Boolean);
+    if (parts[0] === "edit-product" && parts[1]) return { name: "edit-product", id: parts[1] };
+    return { name: "main" };
+  }
+
+  function goHash(path) {
+    window.location.hash = path;
+  }
+
+  // ------------------------------
+  // Seed Data
+  // ------------------------------
+  const initialState = {
+    users: [
+      { username: "admin", role: "admin", password: "monicamylove" },
+      { username: "client", role: "client", password: "client123" },
+    ],
+    currentUser: null,
+    products: [],
+    sales: [],
+    expenses: [],
+    historicalYears: [],
+    settings: { currency: "₦", lowStockDefault: 10 },
+    returnTab: null,
+  };
+
+  // ------------------------------
+  // UI Components
+  // ------------------------------
+  function Card({ title, icon, children, className = "", headerRight = null }) {
+    const Icon = icon || Package;
+    return (
+      <div className={`bg-[#2C2C2C] text-white rounded-2xl shadow-sm border border-slate-700 p-4 sm:p-5 ${className}`}>
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Icon className="w-5 h-5" />
+            <h3 className="font-semibold truncate">{title}</h3>
+          </div>
+          {headerRight && <div className="shrink-0">{headerRight}</div>}
+        </div>
+        {children}
+      </div>
+    );
+  }
+
+  function Button({ title, children, onClick, variant = "primary", className = "", type = "button", disabled=false }) {
+    const styles =
+      variant === "ghost"
+        ? "bg-transparent hover:bg-slate-800 border border-slate-600 text-white"
+        : variant === "danger"
+        ? "bg-red-600 hover:bg-red-700 text-white"
+        : variant === "secondary"
+        ? "bg-slate-700 hover:bg-slate-800 text-white"
+        : "bg-blue-600 hover:bg-blue-700 text-white";
+    return (
+      <button
+        disabled={disabled}
+        type={type}
+        onClick={onClick}
+        className={`px-3 py-2 rounded-xl text-sm font-medium ${styles} ${disabled ? "opacity-60 cursor-not-allowed" : ""} ${className}`}
+      >
+        {children || title}
+      </button>
+    );
+  }
+
+  function NumberInput({ label, value, onChange, placeholder = "", className = "", step, min, liveUpdate = false }) {
+    const [focused, setFocused] = useState(false);
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+      if (!focused) {
+        const n = Number(value);
+        setText(Number.isFinite(n) ? String(n) : "0");
+      }
+    }, [value, focused]);
+
+    function handleFocus() {
+      setFocused(true);
+      const n = Number(value);
+      if (!Number.isFinite(n) || n === 0) setText("");
+    }
+    function handleBlur() {
+      setFocused(false);
+      const raw = String(text ?? "").trim();
+      const n = raw === "" ? 0 : Number(raw);
+      onChange(Number.isFinite(n) ? n : 0);
+    }
+
+    function handleChange(e) {
+      const raw = e.target.value;
+      setText(raw);
+      if (!liveUpdate) return;
+      const trimmed = String(raw ?? "").trim();
+      if (trimmed === "") return onChange(0);
+      const n = Number(trimmed);
+      if (Number.isFinite(n)) onChange(n);
+    }
+
+    return (
+      <label className={`block ${className}`}>
+        <span className="text-xs text-gray-300">{label}</span>
+        <input
+          type="number"
+          step={step}
+          min={min}
+          className="mt-1 w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={focused ? text : (Number(value) === 0 ? "" : text)}
+          placeholder={placeholder}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+      </label>
+    );
+  }
+
+  function TextInput({ label, value, onChange, type = "text", placeholder = "", className = "" }) {
+    return (
+      <label className={`block ${className}`}>
+        <span className="text-xs text-gray-300">{label}</span>
+        <input
+          type={type}
+          className="mt-1 w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      </label>
+    );
+  }
+
+  function Table({ columns, rows, empty = "No data", rowClassName }) {
+    return (
+      <div className="overflow-auto border border-slate-700 rounded-xl">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-800 text-slate-200">
+            <tr>
+              {columns.map((c) => (
+                <th key={c.key} className="text-left px-3 py-2 whitespace-nowrap">
+                  {c.title}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.length === 0 ? (
+              <tr>
+                <td className="px-3 py-4 text-slate-400" colSpan={columns.length}>
+                  {empty}
+                </td>
+              </tr>
+            ) : (
+              rows.map((r, i) => (
+                <tr key={i} className={`border-t border-slate-700 ${rowClassName ? rowClassName(r) : ""}`}>
+                  {columns.map((c) => (
+                    <td key={c.key} className="px-3 py-2 align-top whitespace-nowrap">
+                      {typeof c.render === "function" ? c.render(r) : r[c.key]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // App Root
+  // ------------------------------
+  function App() {
+    const [state, setState] = useState(() => loadState() || initialState);
+    const [booted, setBooted] = useState(false);
+    const [route, setRoute] = useState(() => parseHash());
+
+    useEffect(() => saveState(state), [state]);
+
+    useEffect(() => {
+      const onHash = () => setRoute(parseHash());
+      window.addEventListener("hashchange", onHash);
+      return () => window.removeEventListener("hashchange", onHash);
+    }, []);
+
+    useEffect(() => {
+      (async () => {
+        try {
+          const remote = await GSSvc.fetchAll();
+          setState(s => ({
+            ...s,
+            products: remote.products,
+            sales: remote.sales,
+            expenses: remote.expenses,
+            historicalYears: remote.years || []
+          }));
+        } catch (e) {
+          console.warn("Using local data (could not reach Database):", e);
+        } finally {
+          setBooted(true);
+        }
+      })();
+    }, []);
+
+    if (!booted) {
+      return (
+        <div className="min-h-screen relative overflow-hidden flex items-center justify-center bg-[#1E1E1E] text-white px-4">
+          <div className="splash-grid"></div>
+
+          <div className="splash-orb w-40 h-40 sm:w-56 sm:h-56 bg-blue-500 top-[12%] left-[8%]" style={{ animationDelay: "0s" }}></div>
+          <div className="splash-orb w-32 h-32 sm:w-44 sm:h-44 bg-cyan-400 top-[62%] left-[18%]" style={{ animationDelay: "1.2s" }}></div>
+          <div className="splash-orb w-44 h-44 sm:w-64 sm:h-64 bg-indigo-500 top-[18%] right-[10%]" style={{ animationDelay: "2s" }}></div>
+          <div className="splash-orb w-28 h-28 sm:w-36 sm:h-36 bg-sky-300 bottom-[10%] right-[22%]" style={{ animationDelay: "0.8s" }}></div>
+
+          <div className="splash-chip w-20 h-20 rounded-2xl top-[16%] right-[18%]" style={{ animationDelay: "0.6s" }}></div>
+          <div className="splash-chip w-14 h-14 rounded-xl bottom-[18%] left-[14%]" style={{ animationDelay: "1.4s" }}></div>
+          <div className="splash-chip w-16 h-16 rounded-xl bottom-[24%] right-[12%]" style={{ animationDelay: "2.2s" }}></div>
+
+          <div className="splash-line w-28 top-[24%] left-[22%]" style={{ animationDelay: "0.2s" }}></div>
+          <div className="splash-line w-36 top-[68%] right-[16%]" style={{ animationDelay: "1.6s" }}></div>
+          <div className="splash-line w-24 bottom-[24%] left-[34%]" style={{ animationDelay: "0.9s" }}></div>
+
+          <div className="splash-node top-[22%] left-[20%]" style={{ animationDelay: "0.1s" }}></div>
+          <div className="splash-node top-[56%] right-[24%]" style={{ animationDelay: "1.3s" }}></div>
+          <div className="splash-node bottom-[20%] left-[30%]" style={{ animationDelay: "2.1s" }}></div>
+          <div className="splash-node bottom-[30%] right-[14%]" style={{ animationDelay: "0.7s" }}></div>
+
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(30,30,30,0.12)_45%,rgba(30,30,30,0.78)_100%)]"></div>
+
+          <div className="relative z-10 text-center max-w-2xl">
+            <div className="text-5xl font-extrabold tracking-widest animate-pulse">
+              MONICZ EXCLUSIVE
+            </div>
+            <div className="mt-4 text-lg text-gray-400">
+              Inventory & Sales System
+            </div>
+            <div className="mt-8 flex justify-center">
+              <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <div className="mt-2 text-sm text-slate-300 tracking-wide animate-pulse">Loading...</div>
+          </div>
+        </div>
+      );
+    }
+
+    function login(username, password) {
+      const u = username.trim().toLowerCase();
+      const found = state.users.find((usr) => usr.username.toLowerCase() === u && usr.password === password);
+      if (found) setState((s) => ({ ...s, currentUser: { username: found.username, role: found.role } }));
+      else alert("Invalid credentials");
+    }
+
+    function logout() {
+      setState((s) => ({ ...s, currentUser: null }));
+      goHash("/");
+    }
+
+    if (!state.currentUser) return <Login onLogin={login} />;
+
+    if (route.name === "edit-product") {
+      return (
+        <div className="min-h-screen bg-[#1E1E1E] text-white">
+          <TopBar user={state.currentUser} onLogout={logout} />
+          <div className="max-w-6xl mx-auto px-4 py-6">
+            <EditProductPage
+              state={state}
+              setState={setState}
+              productId={route.id}
+              canDelete={state.currentUser.role === "admin"}
+              onBack={() => {
+                setState((s) => ({ ...s, returnTab: "products" }));
+                goHash("/");
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen bg-[#1E1E1E] text-white">
+        <TopBar user={state.currentUser} onLogout={logout} />
+        {state.currentUser.role === "admin" ? (
+          <AdminApp
+            state={state}
+            setState={setState}
+            returnTab={state.returnTab}
+            clearReturnTab={() => setState((s) => ({ ...s, returnTab: null }))}
+          />
+        ) : (
+          <ClientApp state={state} setState={setState} />
+        )}
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Login & TopBar
+  // ------------------------------
+  function Login({ onLogin }) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      onLogin(username, password);
+    }
+
+    return (
+      <div className="min-h-screen relative overflow-hidden grid place-items-center bg-[#1E1E1E] text-white px-4">
+        <div className="splash-grid"></div>
+
+        <div className="splash-orb w-32 h-32 sm:w-48 sm:h-48 bg-blue-500 top-[12%] left-[8%]" style={{ animationDelay: "0.2s" }}></div>
+        <div className="splash-orb w-24 h-24 sm:w-36 sm:h-36 bg-cyan-400 bottom-[18%] left-[16%]" style={{ animationDelay: "1.2s" }}></div>
+        <div className="splash-orb w-36 h-36 sm:w-56 sm:h-56 bg-indigo-500 top-[16%] right-[12%]" style={{ animationDelay: "1.8s" }}></div>
+
+        <div className="splash-chip w-14 h-14 rounded-xl top-[20%] right-[20%]" style={{ animationDelay: "0.8s" }}></div>
+        <div className="splash-chip w-12 h-12 rounded-lg bottom-[20%] right-[14%]" style={{ animationDelay: "1.6s" }}></div>
+
+        <div className="splash-line w-24 top-[28%] left-[24%]" style={{ animationDelay: "0.4s" }}></div>
+        <div className="splash-line w-28 bottom-[24%] right-[18%]" style={{ animationDelay: "1.1s" }}></div>
+
+        <div className="splash-node top-[24%] left-[22%]" style={{ animationDelay: "0.3s" }}></div>
+        <div className="splash-node bottom-[26%] right-[22%]" style={{ animationDelay: "1.4s" }}></div>
+
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(30,30,30,0.14)_45%,rgba(30,30,30,0.8)_100%)]"></div>
+
+        <form onSubmit={handleSubmit} className="relative z-10 bg-[#2C2C2C] w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-700">
+          <div className="flex items-center gap-2 mb-4">
+            <LogIn className="w-5 h-5" />
+            <h1 className="font-semibold text-lg">Monicz Exclusive Login</h1>
+          </div>
+          <TextInput label="Username" value={username} onChange={setUsername} />
+          <TextInput className="mt-3" label="Password" value={password} onChange={setPassword} type="password" />
+          <div className="mt-4 flex items-center gap-2">
+            <Button type="submit" title="Login" />
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  function TopBar({ user, onLogout }) {
+    return (
+      <div className="sticky top-0 z-10 bg-[#2C2C2C] border-b border-slate-700">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 min-w-0">
+            <ShoppingCart className="w-5 h-5" />
+            <span className="font-semibold truncate">Monicz Exclusive</span>
+            <span className="text-xs text-slate-400 ml-2 whitespace-nowrap">Role: {user.role}</span>
+          </div>
+          <Button variant="ghost" onClick={onLogout}>
+            <LogOut className="w-4 h-4 mr-1" /> Logout
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Shared UI
+  // ------------------------------
+  function KPI({ label, value }) {
+    return (
+      <div className="bg-[#1E1E1E] rounded-xl px-2 sm:px-3 py-3 border border-slate-700 text-center min-w-0">
+        <div className="text-xs text-slate-400 leading-tight break-words">{label}</div>
+        <div className="text-base sm:text-lg font-semibold leading-tight break-words">{value}</div>
+      </div>
+    );
+  }
+
+  function TabButton({ icon: Icon, label, active, onClick }) {
+    return (
+      <button
+        onClick={onClick}
+        className={`w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 px-3 py-2 rounded-xl text-sm border ${
+          active
+            ? "bg-blue-600 text-white border-blue-600"
+            : "bg-[#2C2C2C] border-slate-700 hover:bg-slate-800"
+        }`}
+      >
+        <Icon className="w-4 h-4" /> {label}
+      </button>
+    );
+  }
+
+  // ------------------------------
+  // Admin App
+  // ------------------------------
+  function AdminApp({ state, setState, returnTab, clearReturnTab }) {
+    const [tab, setTab] = useState("dashboard");
+    const [cartBadgeCount, setCartBadgeCount] = useState(() => getCartDraftItemCount(state.currentUser?.username));
+    const { products, sales, expenses, settings } = state;
+
+    const totals = useMemo(() => {
+      const today = sales.filter((s) => withinDays(s.date, 1)).reduce((a, s) => a + s.total, 0);
+      const week = sales.filter((s) => withinDays(s.date, 7)).reduce((a, s) => a + s.total, 0);
+      const month = sales.filter((s) => withinDays(s.date, 30)).reduce((a, s) => a + s.total, 0);
+      const inventoryValue = products.reduce((a, p) => a + (p.price || 0) * (p.stock || 0), 0);
+      const revenue = sales.reduce((a, s) => a + s.total, 0);
+      const cogs = sales.reduce((acc, s) => acc + (s.items || []).reduce((aa, it) => aa + (it.qty * (it.cost || 0)), 0), 0);
+      const salesProfit = revenue - cogs;
+      const expenseTotal = expenses.reduce((a, e) => a + (Number(e.amount) || 0), 0);
+      const netProfit = salesProfit - expenseTotal;
+      const lowStock = products.filter((p) => (p.stock || 0) <= (p.lowStock || settings.lowStockDefault));
+      return { today, week, month, inventoryValue, revenue, cogs, salesProfit, expenseTotal, netProfit, lowStock };
+    }, [products, sales, expenses, settings.lowStockDefault]);
+
+    useEffect(() => {
+      if (returnTab) {
+        setTab(returnTab);
+        clearReturnTab?.();
+      }
+    }, [returnTab, clearReturnTab]);
+
+    useEffect(() => {
+      function refreshCount() {
+        setCartBadgeCount(getCartDraftItemCount(state.currentUser?.username));
+      }
+      refreshCount();
+      window.addEventListener("cart-draft-updated", refreshCount);
+      window.addEventListener("focus", refreshCount);
+      return () => {
+        window.removeEventListener("cart-draft-updated", refreshCount);
+        window.removeEventListener("focus", refreshCount);
+      };
+    }, [state.currentUser?.username]);
+
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        <nav className="grid grid-cols-2 gap-2 mb-4 sm:flex sm:flex-wrap">
+          <TabButton icon={BarChart3} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
+          <TabButton icon={Package} label="Products" active={tab === "products"} onClick={() => setTab("products")} />
+          <TabButton
+            icon={ShoppingCart}
+            label={
+              <span className="inline-flex items-center gap-2">
+                <span>Record Sale</span>
+                {cartBadgeCount > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-yellow-300 text-black text-[11px] font-bold">
+                    {cartBadgeCount}
+                  </span>
+                )}
+              </span>
+            }
+            active={tab === "sell"}
+            onClick={() => setTab("sell")}
+          />
+          <TabButton icon={History} label="Sales History" active={tab === "sales"} onClick={() => setTab("sales")} />
+          <TabButton icon={Wallet} label="Expenses" active={tab === "expenses"} onClick={() => setTab("expenses")} />
+          <TabButton icon={FileText} label="Reports" active={tab === "reports"} onClick={() => setTab("reports")} />
+        </nav>
+
+        {tab === "dashboard" && (
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card title="Sales Summary" icon={BarChart3}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                <KPI label="Today" value={`${settings.currency}${fmt(totals.today)}`} />
+                <KPI label="This Week" value={`${settings.currency}${fmt(totals.week)}`} />
+                <KPI label="This Month" value={`${settings.currency}${fmt(totals.month)}`} />
+              </div>
+            </Card>
+            <Card title="Inventory & Profit" icon={Wallet}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                <KPI label="Inventory Value" value={`${settings.currency}${fmt(totals.inventoryValue)}`} />
+                <KPI label="Sales Profit" value={`${settings.currency}${fmt(totals.salesProfit)}`} />
+                <KPI label="Net Profit" value={`${settings.currency}${fmt(totals.netProfit)}`} />
+              </div>
+              <div className="text-xs text-slate-400 mt-2 text-center">
+                Revenue: {settings.currency}{fmt(totals.revenue)} • COGS: {settings.currency}{fmt(totals.cogs)} • Expenses: {settings.currency}{fmt(totals.expenseTotal)}
+              </div>
+            </Card>
+            <Card title="Low Stock Alerts" icon={AlertTriangle} className="md:col-span-2">
+              <Table
+                columns={[
+                  { key: "name", title: "Product" },
+                  { key: "stock", title: "Stock" },
+                  { key: "low", title: "Min" },
+                ]}
+                rows={totals.lowStock.map((p) => ({
+                  name: p.name,
+                  stock: p.stock,
+                  low: p.lowStock || settings.lowStockDefault
+                }))}
+                empty="No low stock items"
+              />
+            </Card>
+          </div>
+        )}
+
+        {tab === "products" && <ProductsPanel state={state} setState={setState} canDelete={true} />}
+        {tab === "sell" && <RecordSalePanel state={state} setState={setState} />}
+        {tab === "sales" && <SalesHistoryPanel state={state} />}
+        {tab === "expenses" && <ExpensesPanel state={state} setState={setState} onlyMine={false} />}
+        {tab === "reports" && <ReportsPanel state={state} setState={setState} />}
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Products Panel
+  // ------------------------------
+  function ProductsPanel({ state, setState, canDelete }) {
+    const [form, setForm] = useState({
+      name: "",
+      category: "",
+      price: 0,
+      cost: 0,
+      stock: 0,
+      lowStock: state.settings.lowStockDefault,
+    });
+
+    const [bulk, setBulk] = useState("");
+    const [invQuery, setInvQuery] = useState("");
+    const [showBulk, setShowBulk] = useState(false);
+    const fileRef = useRef(null);
+
+    useEffect(() => {
+      if (pendingProductsScrollY == null) return;
+      const scrollY = pendingProductsScrollY;
+      pendingProductsScrollY = null;
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, behavior: "auto" });
+      });
+    }, []);
+
+    const filteredProducts = useMemo(() => {
+      const q = invQuery.trim().toLowerCase();
+      if (!q) return state.products;
+      const terms = q.split(/\s+/).filter(Boolean);
+      return state.products.filter((p) => {
+        const hay = [
+          p.name ?? "",
+          p.category ?? "",
+          String(p.price ?? ""),
+          String(p.cost ?? ""),
+          String(p.stock ?? "")
+        ].join(" ").toLowerCase();
+        return terms.every((t) => hay.includes(t));
+      });
+    }, [state.products, invQuery]);
+
+    function normalizeNewProduct(base) {
+      const createdAt = nowISO();
+      const initialStock = Math.max(0, toNum(base.stock));
+      const user = state.currentUser?.username || "unknown";
+      const baseCost = toNum(base.cost);
+
+      return {
+        id: uid("p"),
+        name: String(base.name || "").trim(),
+        category: String(base.category || "").trim(),
+        price: toNum(base.price),
+        cost: baseCost,
+        stock: initialStock,
+        lowStock: toNum(base.lowStock) || state.settings.lowStockDefault,
+        createdAt,
+        updatedAt: createdAt,
+        stockHistory: initialStock > 0 ? [{
+          dateTime: createdAt,
+          user,
+          qtyChange: initialStock,
+          note: "Initial stock",
+          fromStock: 0,
+          toStock: initialStock,
+          type: "purchase",
+          purchaseDate: dateOnlyFromISO(createdAt),
+          unitCost: baseCost,
+          totalCost: initialStock * baseCost
+        }] : [],
+      };
+    }
+
+    async function addProduct(e) {
+      e.preventDefault();
+      if (!form.name) return alert("Name required");
+
+      const newP = normalizeNewProduct(form);
+
+      let nextProducts;
+      setState((s) => {
+        nextProducts = [...s.products, newP];
+        return { ...s, products: nextProducts };
+      });
+
+      try {
+        await GSSvc.saveProducts(nextProducts);
+        alert("Product added");
+      } catch (err) {
+        showSyncError("Sync to Database (saveProducts)", err);
+      }
+
+      setForm({
+        name: "",
+        category: "",
+        price: 0,
+        cost: 0,
+        stock: 0,
+        lowStock: state.settings.lowStockDefault
+      });
+    }
+
+    function editProduct(p) {
+      pendingProductsScrollY = window.scrollY;
+      goHash(`/edit-product/${p.id}`);
+    }
+
+    async function delProduct(id) {
+      if (!canDelete) return;
+      if (!confirm("Delete product?")) return;
+
+      const next = state.products.filter((p) => p.id !== id);
+      setState((s) => ({ ...s, products: next }));
+
+      try {
+        await GSSvc.deleteProduct(id);
+      } catch (err) {
+        showSyncError("Sync to Database (deleteProduct)", err);
+      }
+    }
+
+    function upsertProducts(existing, incoming) {
+      const byName = new Map(existing.map((p) => [String(p.name || "").toLowerCase(), p]));
+      const next = [...existing];
+
+      for (const inc of incoming) {
+        const key = String(inc.name || "").toLowerCase();
+        if (!key) continue;
+
+        if (byName.has(key)) {
+          const idx = next.findIndex((p) => String(p.name || "").toLowerCase() === key);
+          const existingP = next[idx];
+          next[idx] = {
+            ...existingP,
+            ...inc,
+            id: existingP.id,
+            updatedAt: nowISO(),
+            stockHistory: Array.isArray(existingP.stockHistory) ? existingP.stockHistory : []
+          };
+        } else {
+          next.push(inc);
+        }
+      }
+      return next;
+    }
+
+    async function parseBulk() {
+      const lines = bulk.split(/\n|\r/).map((l) => l.trim()).filter(Boolean);
+      const parsed = [];
+
+      for (const line of lines) {
+        const parts = line.split(",").map((s) => s.trim());
+        const name = parts[0] || "";
+        if (!name) continue;
+
+        const category = parts[1] || "";
+        const price = toNum(parts[2] || "0");
+        const stock = toNum(parts[3] || "0");
+        const low = toNum(parts[4] || String(state.settings.lowStockDefault)) || state.settings.lowStockDefault;
+        const cost = toNum(parts[5] || "0");
+
+        parsed.push(normalizeNewProduct({ name, category, price, stock, lowStock: low, cost }));
+      }
+
+      if (!parsed.length) return alert("No valid lines found.");
+
+      let nextProducts;
+      setState((s) => {
+        nextProducts = upsertProducts(s.products, parsed);
+        return { ...s, products: nextProducts };
+      });
+
+      setBulk("");
+
+      try {
+        await GSSvc.saveProducts(nextProducts);
+        alert(`Imported ${parsed.length} products (merged by name).`);
+      } catch (err) {
+        showSyncError("Sync to Database (saveProducts after parseBulk)", err);
+      }
+    }
+
+    function handleImportFile(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+
+      reader.onload = async () => {
+        try {
+          const text = String(reader.result || "");
+          const objs = csvToObjects(text);
+          if (!objs.length) return alert("CSV appears empty.");
+
+          const normalized = objs.map((o) => {
+            const name = (o.name || o.Name || o.product || o.Product || "").trim();
+            const category = (o.category || o.Category || "").trim();
+            const price = toNum(o.price ?? o.Price ?? 0);
+            const cost = toNum(o.cost ?? o.Cost ?? 0);
+            const stock = toNum(o.stock ?? o.Stock ?? 0);
+            const lowStock = toNum(o.lowStock ?? o.LowStock ?? o.min ?? o.Min ?? state.settings.lowStockDefault) || state.settings.lowStockDefault;
+            if (!name) return null;
+            return normalizeNewProduct({ name, category, price, cost, stock, lowStock });
+          }).filter(Boolean);
+
+          if (!normalized.length) return alert("No valid rows with a 'name' column.");
+
+          let nextProducts;
+          setState((s) => {
+            nextProducts = upsertProducts(s.products, normalized);
+            return { ...s, products: nextProducts };
+          });
+
+          try {
+            await GSSvc.saveProducts(nextProducts);
+            alert(`Imported ${normalized.length} products (merged by name).`);
+          } catch (err) {
+            showSyncError("Sync to Database (saveProducts after file import)", err);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Failed to import CSV. Please check the file format.");
+        } finally {
+          if (fileRef.current) fileRef.current.value = '';
+        }
+      };
+
+      reader.readAsText(file);
+    }
+
+    function exportProducts() {
+      const rows = state.products.map((p) => ({
+        name: p.name,
+        category: p.category,
+        price: p.price,
+        cost: p.cost || 0,
+        stock: p.stock,
+        lowStock: p.lowStock,
+        createdAt: p.createdAt || "",
+        updatedAt: p.updatedAt || "",
+        stockHistory_json: JSON.stringify(p.stockHistory || [])
+      }));
+      const csv = csvStringify(rows);
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "products.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    return (
+      <div className="grid gap-4">
+        <div className="grid lg:grid-cols-3 gap-4 items-start">
+          <div className="flex flex-col gap-3">
+            <Card title="Add Product" icon={Package}>
+              <form onSubmit={addProduct} className="grid gap-3">
+                <TextInput label="Name" value={form.name} onChange={(v) => setForm((f) => ({ ...f, name: v }))} />
+                <TextInput label="Category" value={form.category} onChange={(v) => setForm((f) => ({ ...f, category: v }))} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <NumberInput label="Price" step="0.01" value={form.price} onChange={(v) => setForm((f) => ({ ...f, price: v }))} />
+                  <NumberInput label="Cost" step="0.01" value={form.cost} onChange={(v) => setForm((f) => ({ ...f, cost: v }))} />
+                  <NumberInput label="Stock" min="0" value={form.stock} onChange={(v) => setForm((f) => ({ ...f, stock: v }))} />
+                  <NumberInput label="Low Stock Min" min="0" value={form.lowStock} onChange={(v) => setForm((f) => ({ ...f, lowStock: v }))} />
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button type="submit" title="Add" />
+                </div>
+
+                <div className="text-xs text-slate-400">
+                  Initial stock is logged with user + date/time in Stock History (as a purchase).
+                </div>
+              </form>
+            </Card>
+
+            <button
+              type="button"
+              onClick={() => setShowBulk(b => !b)}
+              className={`inline-flex self-start items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+                showBulk
+                  ? "bg-blue-600 border-blue-500 text-white"
+                  : "bg-[#2C2C2C] border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+              }`}
+            >
+              <Upload className="w-4 h-4" />
+              Bulk / CSV Tools
+              <span className="ml-auto text-xs opacity-70">{showBulk ? "▲" : "▼"}</span>
+            </button>
+          </div>
+
+          {showBulk && <Card title="Bulk / CSV Tools" icon={Plus}>
+          <p className="text-xs text-slate-400 mb-2">
+            Paste lines (<code>name, category, price, stock, lowStock, cost</code>) or import a CSV file
+            (headers: name,category,price,cost,stock,lowStock). Paste/CSV will <b>merge by name</b>.
+          </p>
+
+          <textarea
+            value={bulk}
+            onChange={(e) => setBulk(e.target.value)}
+            className="w-full h-28 border border-slate-700 bg-[#1E1E1E] text-white rounded-xl p-2"
+            placeholder={`Lip Gloss, Makeup, 250, 52, 10, 200\nFace Powder, Makeup, 1200, 45, 8, 950`}
+          />
+
+          <div className="mt-2 flex flex-wrap gap-2">
+            <Button onClick={parseBulk} title="Add From Lines" />
+            <Button variant="secondary" onClick={exportProducts}>
+              <Download className="w-4 h-4 mr-1" /> Export Products CSV
+            </Button>
+            <label className="px-3 py-2 rounded-xl text-sm font-medium bg-slate-700 hover:bg-slate-800 cursor-pointer inline-flex items-center gap-2">
+              <Upload className="w-4 h-4" /> Import Products CSV
+              <input ref={fileRef} onChange={handleImportFile} type="file" accept=".csv,text/csv" className="hidden" />
+            </label>
+          </div>
+        </Card>}
+        </div>
+
+        <Card title="Inventory" icon={Package}>
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-end gap-2">
+            <div className="flex-1">
+              <TextInput
+                label="Search inventory"
+                value={invQuery}
+                onChange={setInvQuery}
+                placeholder="e.g. gloss makeup 250"
+              />
+            </div>
+            {invQuery && (
+              <Button variant="ghost" onClick={() => setInvQuery("")}>Clear</Button>
+            )}
+          </div>
+
+          <div className="text-xs text-slate-400 mb-2">
+            Showing <b>{filteredProducts.length}</b> of {state.products.length}
+          </div>
+
+          <div className="sm:hidden grid gap-2">
+            {filteredProducts.length === 0 ? (
+              <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">
+                {invQuery ? "No products match your search" : "No products yet. Add some on the left or paste CSV lines."}
+              </div>
+            ) : (
+              filteredProducts.map((r) => (
+                <div key={r.id} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                  <div className="font-semibold text-white">{r.name}</div>
+                  <div className="text-xs text-slate-400 mt-1">{r.category || "Uncategorized"}</div>
+                  <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+                    <div>Price: <span className="text-white">{state.settings.currency}{fmt(r.price ?? 0)}</span></div>
+                    <div>Cost: <span className="text-white">{state.settings.currency}{fmt(r.cost ?? 0)}</span></div>
+                    <div>Stock: <span className="text-white">{r.stock}</span></div>
+                    <div>Min: <span className="text-white">{r.lowStock}</span></div>
+                  </div>
+                  <div className="text-[11px] text-slate-400 mt-2">
+                    Last Update: {r.updatedAt ? niceDateTime(r.updatedAt) : "—"}
+                  </div>
+                  <div className="mt-2 flex items-center gap-2">
+                    <Button variant="secondary" onClick={() => editProduct(r)}>
+                      <Edit3 className="w-4 h-4" />
+                    </Button>
+                    {canDelete && (
+                      <Button className="ml-auto" variant="danger" onClick={() => delProduct(r.id)}>
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden sm:block">
+            <Table
+              columns={[
+                { key: "name", title: "Product" },
+                { key: "category", title: "Category" },
+                { key: "price", title: "Price", render: (r) => `${state.settings.currency}${fmt(r.price ?? 0)}` },
+                { key: "cost", title: "Cost", render: (r) => `${state.settings.currency}${fmt(r.cost ?? 0)}` },
+                { key: "stock", title: "Stock" },
+                { key: "low", title: "Min", render: (r) => r.lowStock },
+                { key: "updatedAt", title: "Last Update", render: (r) => (r.updatedAt ? niceDateTime(r.updatedAt) : "") },
+                {
+                  key: "actions",
+                  title: "",
+                  render: (r) => (
+                    <div className="flex gap-2">
+                      <Button variant="secondary" onClick={() => editProduct(r)}>
+                        <Edit3 className="w-4 h-4" />
+                      </Button>
+                      {canDelete && (
+                        <Button variant="danger" onClick={() => delProduct(r.id)}>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ),
+                },
+              ]}
+              rows={filteredProducts}
+              empty={invQuery ? "No products match your search" : "No products yet. Add some on the left or paste CSV lines."}
+            />
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Edit Product Page
+  // ------------------------------
+  function EditProductPage({ state, setState, productId, canDelete, onBack }) {
+    const p = state.products.find(x => x.id === productId);
+
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }, [productId]);
+
+    const [form, setForm] = useState(() => ({
+      name: p?.name || "",
+      category: p?.category || "",
+      price: toNum(p?.price || 0),
+      cost: toNum(p?.cost || 0),
+      lowStock: toNum(p?.lowStock || state.settings.lowStockDefault),
+      addStock: 0,
+      purchaseDate: dateOnlyFromISO(nowISO()),
+      purchaseUnitCost: toNum(p?.cost || 0),
+      note: "",
+    }));
+
+    useEffect(() => {
+      const pp = state.products.find(x => x.id === productId);
+      if (!pp) return;
+      setForm(f => ({
+        ...f,
+        name: pp.name || "",
+        category: pp.category || "",
+        price: toNum(pp.price || 0),
+        cost: toNum(pp.cost || 0),
+        lowStock: toNum(pp.lowStock || state.settings.lowStockDefault),
+        purchaseUnitCost: toNum(pp.cost || 0),
+      }));
+    }, [productId, state.products.length]);
+
+    if (!p) {
+      return (
+        <Card title="Edit Product" icon={Package}>
+          <div className="text-slate-300">Product not found.</div>
+          <div className="mt-3">
+            <Button variant="secondary" onClick={onBack}>
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back
+            </Button>
+          </div>
+        </Card>
+      );
+    }
+
+    const hasChanges = useMemo(() => {
+      const defaultPurchaseDate = dateOnlyFromISO(nowISO());
+
+      const coreChanged =
+        form.name.trim() !== String(p.name || "") ||
+        form.category.trim() !== String(p.category || "") ||
+        toNum(form.price) !== toNum(p.price || 0) ||
+        toNum(form.cost) !== toNum(p.cost || 0) ||
+        toNum(form.lowStock) !== toNum(p.lowStock || state.settings.lowStockDefault);
+
+      const stockLoadChanged =
+        Math.max(0, toNum(form.addStock || 0)) > 0 ||
+        toNum(form.purchaseUnitCost || 0) !== toNum(p.cost || 0) ||
+        String(form.purchaseDate || "").trim() !== defaultPurchaseDate ||
+        String(form.note || "").trim() !== "";
+
+      return coreChanged || stockLoadChanged;
+    }, [form, p, state.settings.lowStockDefault]);
+
+    async function saveChanges(e) {
+      e.preventDefault();
+      if (!form.name.trim()) return alert("Name required");
+
+      const addQty = Math.max(0, toNum(form.addStock || 0));
+      const stamp = nowISO();
+      const user = state.currentUser?.username || "unknown";
+
+      const purchaseDate = (form.purchaseDate || "").trim() || dateOnlyFromISO(stamp);
+      const unitCost = toNum(form.purchaseUnitCost || 0);
+      const totalCost = addQty > 0 ? (addQty * unitCost) : 0;
+
+      let nextProducts;
+
+      setState(s => {
+        nextProducts = s.products.map(prod => {
+          if (prod.id !== productId) return prod;
+
+          const before = toNum(prod.stock);
+          const after = before + addQty;
+
+          const stockHistory = Array.isArray(prod.stockHistory) ? [...prod.stockHistory] : [];
+
+          if (addQty > 0) {
+            stockHistory.unshift({
+              dateTime: stamp,
+              user,
+              qtyChange: addQty,
+              note: (form.note?.trim() || "Stock added"),
+              fromStock: before,
+              toStock: after,
+              type: "purchase",
+              purchaseDate,
+              unitCost,
+              totalCost
+            });
+          }
+
+          const updated = {
+            ...prod,
+            name: form.name.trim(),
+            category: form.category.trim(),
+            price: toNum(form.price),
+            cost: toNum(form.cost),
+            lowStock: toNum(form.lowStock) || state.settings.lowStockDefault,
+            updatedAt: stamp,
+            stock: after,
+            stockHistory,
+          };
+
+          if (!updated.createdAt) updated.createdAt = stamp;
+          return updated;
+        });
+
+        return { ...s, products: nextProducts };
+      });
+
+      try {
+        await GSSvc.saveProducts(nextProducts);
+        alert("Product updated");
+        onBack();
+      } catch (err) {
+        showSyncError("Sync to Database (saveProducts)", err);
+      }
+    }
+
+    async function deleteThis() {
+      if (!canDelete) return;
+      if (!confirm("Delete product?")) return;
+
+      const next = state.products.filter(x => x.id !== productId);
+      setState(s => ({ ...s, products: next }));
+
+      try {
+        await GSSvc.deleteProduct(productId);
+        alert("Product deleted");
+        onBack();
+      } catch (err) {
+        showSyncError("Sync to Database (deleteProduct)", err);
+      }
+    }
+
+    const historyRows = (p.stockHistory || []).map(h => ({
+      dateTime: h.dateTime ? new Date(h.dateTime).toLocaleString() : "",
+      user: h.user || "",
+      change: (h.qtyChange ?? 0),
+      stock: `${h.fromStock ?? ""} → ${h.toStock ?? ""}`,
+      purchaseDate: h.purchaseDate || "",
+      unitCost: (h.unitCost ?? ""),
+      totalCost: (h.totalCost ?? ""),
+      note: h.note || "",
+    }));
+
+    return (
+      <div className="grid gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <div className="text-xl font-semibold">Edit Product</div>
+            <div className="text-xs text-slate-400 break-words">
+              Created: {p.createdAt ? niceDateTime(p.createdAt) : "—"} • Last Update: {p.updatedAt ? niceDateTime(p.updatedAt) : "—"}
+            </div>
+          </div>
+          <div className="flex gap-2 w-full sm:w-auto justify-between sm:justify-start">
+            <Button variant="secondary" onClick={onBack}>
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back
+            </Button>
+            {canDelete && (
+              <Button variant="danger" onClick={deleteThis}>
+                <Trash2 className="w-4 h-4 mr-1" /> Delete
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-4">
+          <Card title="Product Details" icon={Package}>
+            <form onSubmit={saveChanges} className="grid gap-3">
+              <TextInput label="Name" value={form.name} onChange={(v) => setForm(f => ({ ...f, name: v }))} />
+              <TextInput label="Category" value={form.category} onChange={(v) => setForm(f => ({ ...f, category: v }))} />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <NumberInput label="Price" step="0.01" liveUpdate value={form.price} onChange={(v) => setForm(f => ({ ...f, price: v }))} />
+                <NumberInput label="Cost" step="0.01" liveUpdate value={form.cost} onChange={(v) => setForm(f => ({ ...f, cost: v }))} />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                  <div className="text-xs text-slate-400">Current Stock</div>
+                  <div className="text-lg font-semibold">{p.stock}</div>
+                </div>
+                <NumberInput label="Low Stock Min" min="0" liveUpdate value={form.lowStock} onChange={(v) => setForm(f => ({ ...f, lowStock: v }))} />
+              </div>
+
+              <div className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                <div className="text-sm font-semibold mb-2">New Stock Load (Purchase)</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <NumberInput
+                    label="Add to Stock (Qty)"
+                    min="0"
+                    liveUpdate
+                    value={form.addStock}
+                    onChange={(v) => setForm(f => ({ ...f, addStock: v }))}
+                  />
+                  <TextInput
+                    label="Date of Purchase"
+                    type="date"
+                    value={form.purchaseDate}
+                    onChange={(v) => setForm(f => ({ ...f, purchaseDate: v }))}
+                  />
+                  <NumberInput
+                    label="Unit Cost (this purchase)"
+                    step="0.01"
+                    liveUpdate
+                    value={form.purchaseUnitCost}
+                    onChange={(v) => setForm(f => ({ ...f, purchaseUnitCost: v }))}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                  <TextInput
+                    label="Note (optional)"
+                    value={form.note}
+                    onChange={(v) => setForm(f => ({ ...f, note: v }))}
+                    placeholder="e.g. New shipment"
+                  />
+                  <div className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                    <div className="text-xs text-slate-400">Total Purchase Amount</div>
+                    <div className="text-lg font-semibold">
+                      {state.settings.currency}{fmt(Math.max(0, toNum(form.addStock)) * toNum(form.purchaseUnitCost))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-xs text-slate-400 mt-2">
+                  This logs purchase date + unit cost + total amount in Stock History.
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                {hasChanges ? (
+                  <Button type="submit" title="Save Changes" />
+                ) : (
+                  <Button variant="secondary" onClick={onBack} title="Close" />
+                )}
+              </div>
+            </form>
+          </Card>
+
+          <Card title="Stock History (Audit Log)" icon={History}>
+            <div className="sm:hidden grid gap-2">
+              {historyRows.length === 0 ? (
+                <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">
+                  No stock changes logged yet.
+                </div>
+              ) : (
+                historyRows.map((r, idx) => (
+                  <div key={`${r.dateTime}-${idx}`} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                    <div className="text-xs text-slate-400">{r.dateTime || "—"}</div>
+                    <div className="mt-1 text-xs text-slate-300">User: <span className="text-white">{r.user || "—"}</span></div>
+                    <div className="text-xs text-slate-300">Change: <span className="text-white">{r.change}</span></div>
+                    <div className="text-xs text-slate-300">Stock: <span className="text-white">{r.stock}</span></div>
+                    <div className="text-xs text-slate-300">Purchase Date: <span className="text-white">{r.purchaseDate || "—"}</span></div>
+                    <div className="text-xs text-slate-300">Unit Cost: <span className="text-white">{r.unitCost === "" ? "—" : `${state.settings.currency}${fmt(r.unitCost)}`}</span></div>
+                    <div className="text-xs text-slate-300">Total Amount: <span className="text-white">{r.totalCost === "" ? "—" : `${state.settings.currency}${fmt(r.totalCost)}`}</span></div>
+                    <div className="mt-1 text-xs text-slate-300 break-words">Note: <span className="text-white">{r.note || "—"}</span></div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            <div className="hidden sm:block">
+              <Table
+                columns={[
+                  { key: "dateTime", title: "Date/Time" },
+                  { key: "user", title: "User" },
+                  { key: "change", title: "Change" },
+                  { key: "stock", title: "Stock" },
+                  { key: "purchaseDate", title: "Purchase Date" },
+                  { key: "unitCost", title: "Unit Cost", render: (r) => (r.unitCost === "" ? "" : `${state.settings.currency}${fmt(r.unitCost)}`) },
+                  { key: "totalCost", title: "Total Amount", render: (r) => (r.totalCost === "" ? "" : `${state.settings.currency}${fmt(r.totalCost)}`) },
+                  { key: "note", title: "Note" },
+                ]}
+                rows={historyRows}
+                empty="No stock changes logged yet."
+              />
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Record Sale
+  // ------------------------------
+  function RecordSalePanel({ state, setState, forceTodayDefault = false }) {
+    const [cart, setCart] = useState([]);
+    const [filter, setFilter] = useState("");
+    const [saleDate, setSaleDate] = useState(dateOnlyFromISO(nowISO()));
+    const cartDraftKey = useMemo(
+      () => `monicz_exclusive_cart_draft_${String(state.currentUser?.username || "unknown").toLowerCase()}`,
+      [state.currentUser?.username]
+    );
+    const cartDraftHydratedRef = useRef(false);
+
+    useEffect(() => {
+      cartDraftHydratedRef.current = false;
+      try {
+        const raw = localStorage.getItem(cartDraftKey);
+        if (!raw) {
+          setCart([]);
+          setSaleDate(dateOnlyFromISO(nowISO()));
+          cartDraftHydratedRef.current = true;
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        const nextCart = Array.isArray(parsed?.cart) ? parsed.cart : [];
+        const nextSaleDate = forceTodayDefault
+          ? dateOnlyFromISO(nowISO())
+          : (String(parsed?.saleDate || "").trim() || dateOnlyFromISO(nowISO()));
+        setCart(nextCart);
+        setSaleDate(nextSaleDate);
+      } catch {
+        setCart([]);
+        setSaleDate(dateOnlyFromISO(nowISO()));
+      } finally {
+        cartDraftHydratedRef.current = true;
+      }
+    }, [cartDraftKey, forceTodayDefault]);
+
+    useEffect(() => {
+      if (!cartDraftHydratedRef.current) return;
+      try {
+        localStorage.setItem(cartDraftKey, JSON.stringify({ cart, saleDate }));
+        window.dispatchEvent(new Event("cart-draft-updated"));
+      } catch {}
+    }, [cart, saleDate, cartDraftKey]);
+
+    const products = useMemo(() => {
+      const f = filter.trim().toLowerCase();
+      return f
+        ? state.products.filter((p) =>
+            String(p.name || "").toLowerCase().includes(f) ||
+            String(p.category || "").toLowerCase().includes(f)
+          )
+        : state.products;
+    }, [state.products, filter]);
+
+    const selectedProductIds = useMemo(() => new Set(cart.map((it) => it.productId)), [cart]);
+    const cartQtyByProductId = useMemo(() => {
+      const m = new Map();
+      for (const it of cart) m.set(it.productId, Number(it.qty) || 0);
+      return m;
+    }, [cart]);
+
+    const total = cart.reduce((a, it) => a + it.qty * it.price, 0);
+
+    function addToCart(p) {
+      if (p.stock <= 0) return alert("Out of stock");
+      setCart((c) => {
+        const i = c.findIndex((x) => x.productId === p.id);
+        if (i >= 0) {
+          const next = [...c];
+          next[i] = { ...next[i], qty: next[i].qty + 1 };
+          return next;
+        }
+        return [...c, { productId: p.id, name: p.name, qty: 1, price: p.price || 0, cost: p.cost || 0 }];
+      });
+    }
+
+    function updateQty(id, qty) {
+      setCart((c) => c.map((x) => (x.productId === id ? { ...x, qty: Math.max(1, qty) } : x)));
+    }
+
+    function removeFromCart(id) {
+      setCart((c) => c.filter((x) => x.productId !== id));
+    }
+
+    function clearCartDraft() {
+      setCart([]);
+      setSaleDate(dateOnlyFromISO(nowISO()));
+      try { localStorage.removeItem(cartDraftKey); } catch {}
+      window.dispatchEvent(new Event("cart-draft-updated"));
+    }
+
+    async function completeSale() {
+      if (!cart.length) return alert("Cart is empty");
+
+      for (const it of cart) {
+        const p = state.products.find((p) => p.id === it.productId);
+        if (!p || p.stock < it.qty) return alert(`Insufficient stock for ${it?.name}`);
+      }
+
+      const saleDateISO = new Date(`${saleDate}T00:00:00`).toISOString();
+      const saleEntries = cart.map((it) => {
+        const subtotal = it.qty * it.price;
+        return {
+          id: uid("s"),
+          date: saleDateISO,
+          items: [{ ...it, subtotal }],
+          total: subtotal,
+          user: state.currentUser.username,
+        };
+      });
+
+      let updatedProducts;
+      setState((s) => {
+        const stamp = nowISO();
+        const user = s.currentUser?.username || "unknown";
+
+        updatedProducts = s.products.map((p) => {
+          const line = cart.find((it) => it.productId === p.id);
+          if (!line) return p;
+
+          const before = toNum(p.stock);
+          const after = before - line.qty;
+
+          const stockHistory = Array.isArray(p.stockHistory) ? [...p.stockHistory] : [];
+          stockHistory.unshift({
+            dateTime: stamp,
+            user,
+            qtyChange: -line.qty,
+            note: `Sale recorded (${line.name})`,
+            fromStock: before,
+            toStock: after,
+            type: "sale",
+          });
+
+          return { ...p, stock: after, updatedAt: stamp, stockHistory };
+        });
+
+        return { ...s, sales: [...saleEntries, ...s.sales], products: updatedProducts };
+      });
+
+      clearCartDraft();
+
+      try {
+        await Promise.all([
+          ...saleEntries.map((sale) => GSSvc.addSale(sale)),
+          GSSvc.saveProducts(updatedProducts),
+        ]);
+        alert("Sale recorded");
+      } catch (err) {
+        showSyncError("Sync to Database (addSale/saveProducts)", err);
+      }
+    }
+
+    return (
+      <div className="grid lg:grid-cols-2 gap-4">
+        <Card title="Pick Products" icon={ShoppingCart}>
+          <div className="mb-2">
+            <TextInput label="Search" value={filter} onChange={setFilter} placeholder="Name or category" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-96 overflow-auto pr-1">
+            {products.map((p) => {
+              const selected = selectedProductIds.has(p.id);
+              const pickedQty = cartQtyByProductId.get(p.id) || 0;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => addToCart(p)}
+                  style={{ WebkitTapHighlightColor: "transparent" }}
+                  className={`border border-slate-700 rounded-xl p-2 text-left focus:outline-none focus:ring-0 active:ring-0 ${
+                    selected
+                      ? "bg-yellow-100 text-black font-semibold border-yellow-300"
+                      : "hover:bg-slate-800 active:bg-yellow-100 active:text-black"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="font-medium break-words">{p.name}</div>
+                    {pickedQty > 0 && (
+                      <span className="inline-flex items-center justify-center min-w-[22px] h-5 px-1 rounded-full bg-black text-yellow-300 text-[11px] font-bold">
+                        {pickedQty}
+                      </span>
+                    )}
+                  </div>
+                  <div className={`text-xs ${selected ? "text-black" : "text-slate-400"}`}>{p.category || "Uncategorized"}</div>
+                  <div className={`text-xs ${selected ? "text-black" : ""}`}>
+                    Price: {state.settings.currency}{fmt(p.price || 0)} • Stock: {p.stock}
+                  </div>
+                </button>
+              );
+            })}
+            {products.length === 0 && <div className="text-sm text-slate-400">No products available.</div>}
+          </div>
+        </Card>
+
+        <Card title="Cart & Checkout" icon={Wallet}>
+          <div className="sm:hidden grid gap-2">
+            {cart.length === 0 ? (
+              <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">
+                No items in cart
+              </div>
+            ) : (
+              cart.map((r) => (
+                <div key={r.productId} className="bg-yellow-100 text-black border border-yellow-200 rounded-xl p-2.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="font-semibold text-sm leading-tight break-words">{r.name}</div>
+                    <div className="text-xs font-semibold whitespace-nowrap">{state.settings.currency}{fmt(r.qty * (r.price || 0))}</div>
+                  </div>
+                  <div className="mt-1 flex items-center justify-between text-xs">
+                    <span>Price: <span className="font-medium">{state.settings.currency}{fmt(r.price || 0)}</span></span>
+                    <span>Qty:</span>
+                    <input
+                      type="number"
+                      className="w-16 border border-slate-400 bg-white text-black rounded-lg px-2 py-0.5"
+                      value={r.qty}
+                      onChange={(e) => updateQty(r.productId, Number(e.target.value))}
+                    />
+                    <Button variant="danger" onClick={() => removeFromCart(r.productId)}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden sm:block">
+            <Table
+              columns={[
+                { key: "name", title: "Item" },
+                { key: "qty", title: "Qty", render: (r) => (
+                  <input
+                    type="number"
+                    className="w-20 border border-slate-700 bg-[#1E1E1E] text-white rounded-lg px-2 py-1"
+                    value={r.qty}
+                    onChange={(e) => updateQty(r.productId, Number(e.target.value))}
+                  />
+                )},
+                { key: "price", title: "Price", render: (r) => `${state.settings.currency}${fmt(r.price || 0)}` },
+                { key: "subtotal", title: "Subtotal", render: (r) => `${state.settings.currency}${fmt(r.qty * (r.price || 0))}` },
+                { key: "actions", title: "", render: (r) => (
+                  <Button variant="danger" onClick={() => removeFromCart(r.productId)}>
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                )},
+              ]}
+              rows={cart}
+              rowClassName={() => "bg-yellow-100 text-black"}
+              empty="No items in cart"
+            />
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 md:items-end">
+            <label className="block">
+              <span className="text-xs text-gray-300">Sale Date</span>
+              <div className="relative mt-1">
+                <input
+                  type="date"
+                  className="w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={saleDate}
+                  onChange={(e) => setSaleDate(e.target.value)}
+                />
+              </div>
+            </label>
+            <div className="mt-1 flex items-center justify-between md:justify-end">
+              <div className="text-sm">Total:</div>
+              <div className="text-lg font-semibold">{state.settings.currency}{fmt(total)}</div>
+            </div>
+          </div>
+          <div className="mt-3 flex gap-2">
+            <Button onClick={completeSale} title="Complete Sale" />
+            <Button variant="ghost" onClick={clearCartDraft} title="Clear" />
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Admin Sales History
+  // ------------------------------
+  function SalesHistoryPanel({ state }) {
+    const [range, setRange] = useState("30");
+    const [filterDate, setFilterDate] = useState(new Date().toISOString().slice(0, 10));
+    const [stockFilter, setStockFilter] = useState("all_sales");
+    const STALE_DAYS = 90;
+    const FAST_MOVING_MIN_QTY_90 = 10;
+
+    const filtered = useMemo(() => {
+      let filtered = state.sales.filter((s) => withinDays(s.date, Number(range) || 3650));
+      if (filterDate) {
+        const targetDate = new Date(filterDate);
+        const start = new Date(targetDate);
+        start.setHours(0,0,0,0);
+        const end = new Date(targetDate);
+        end.setHours(23,59,59,999);
+        filtered = filtered.filter(s => {
+          const d = new Date(s.date);
+          return d >= start && d <= end;
+        });
+      }
+      return filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }, [state.sales, range, filterDate]);
+
+    const stockRows = useMemo(() => {
+      const soldById = new Map();
+      const soldByName = new Map();
+      const soldById90 = new Map();
+      const soldByName90 = new Map();
+      const lastSaleById = new Map();
+      const lastSaleByName = new Map();
+      const nowMs = Date.now();
+      const recentCutoff = nowMs - (STALE_DAYS * 86400000);
+
+      for (const sale of state.sales || []) {
+        const saleMs = new Date(sale.date).getTime();
+        for (const it of sale.items || []) {
+          const qty = Number(it.qty) || 0;
+          const pid = String(it.productId || "");
+          const nm = String(it.name || "").trim().toLowerCase();
+
+          if (pid) {
+            soldById.set(pid, (soldById.get(pid) || 0) + qty);
+            if (!lastSaleById.has(pid) || saleMs > lastSaleById.get(pid)) lastSaleById.set(pid, saleMs);
+            if (saleMs >= recentCutoff) soldById90.set(pid, (soldById90.get(pid) || 0) + qty);
+          }
+          if (nm) {
+            soldByName.set(nm, (soldByName.get(nm) || 0) + qty);
+            if (!lastSaleByName.has(nm) || saleMs > lastSaleByName.get(nm)) lastSaleByName.set(nm, saleMs);
+            if (saleMs >= recentCutoff) soldByName90.set(nm, (soldByName90.get(nm) || 0) + qty);
+          }
+        }
+      }
+
+      const rows = (state.products || []).map((p) => {
+        const pid = String(p.id || "");
+        const nm = String(p.name || "").trim().toLowerCase();
+
+        const soldQty = (pid ? soldById.get(pid) : undefined) ?? soldByName.get(nm) ?? 0;
+        const soldQty90 = (pid ? soldById90.get(pid) : undefined) ?? soldByName90.get(nm) ?? 0;
+        const currentStock = Number(p.stock) || 0;
+        const lowStockMin = Number(p.lowStock) || Number(state.settings?.lowStockDefault) || 0;
+        const totalHandled = currentStock + soldQty;
+        const sellThroughPct = totalHandled > 0 ? (soldQty / totalHandled) * 100 : 0;
+
+        const lastSaleMs = (pid ? lastSaleById.get(pid) : undefined) ?? lastSaleByName.get(nm) ?? null;
+        const daysSinceLastSale = lastSaleMs ? Math.floor((nowMs - lastSaleMs) / 86400000) : null;
+
+        const halfwaySold = totalHandled > 0 && soldQty >= (totalHandled * 0.5);
+        const notSoldIn90 = daysSinceLastSale == null || daysSinceLastSale >= STALE_DAYS;
+        const fastMoving = soldQty90 >= FAST_MOVING_MIN_QTY_90;
+        const lowStock = currentStock <= lowStockMin;
+        const outOfStock = currentStock <= 0;
+        const overstock = currentStock > 0 && currentStock >= Math.max(lowStockMin * 3, soldQty90 * 2);
+
+        return {
+          id: p.id,
+          name: p.name,
+          category: p.category || "Uncategorized",
+          stock: currentStock,
+          lowStockMin,
+          soldQty,
+          soldQty90,
+          sellThroughPct,
+          lastSaleDate: lastSaleMs ? new Date(lastSaleMs).toLocaleDateString() : "Never sold",
+          daysSinceLastSale: daysSinceLastSale == null ? "Never" : String(daysSinceLastSale),
+          halfwaySold,
+          notSoldIn90,
+          fastMoving,
+          lowStock,
+          outOfStock,
+          overstock,
+        };
+      });
+
+      if (stockFilter === "halfway_sold") {
+        return rows.filter((r) => r.halfwaySold).sort((a, b) => b.sellThroughPct - a.sellThroughPct);
+      }
+      if (stockFilter === "not_sold_90") {
+        return rows.filter((r) => r.notSoldIn90).sort((a, b) => {
+          const aa = a.daysSinceLastSale === "Never" ? 999999 : Number(a.daysSinceLastSale);
+          const bb = b.daysSinceLastSale === "Never" ? 999999 : Number(b.daysSinceLastSale);
+          return bb - aa;
+        });
+      }
+      if (stockFilter === "fast_moving") {
+        return rows.filter((r) => r.fastMoving).sort((a, b) => b.soldQty90 - a.soldQty90);
+      }
+      if (stockFilter === "low_stock") {
+        return rows.filter((r) => r.lowStock).sort((a, b) => a.stock - b.stock);
+      }
+      if (stockFilter === "out_of_stock") {
+        return rows.filter((r) => r.outOfStock).sort((a, b) => a.name.localeCompare(b.name));
+      }
+      if (stockFilter === "overstock") {
+        return rows.filter((r) => r.overstock).sort((a, b) => b.stock - a.stock);
+      }
+      return [];
+    }, [state.sales, state.products, state.settings?.lowStockDefault, stockFilter]);
+
+    const isStockMode = stockFilter !== "all_sales";
+    const exportRows = isStockMode ? stockRows : filtered;
+    const exportFilename = isStockMode ? "sales-stock-insights.csv" : "sales.csv";
+    const totalResultCount = isStockMode ? stockRows.length : filtered.length;
+    const exportMapRow = isStockMode
+      ? (r) => ({
+          product: r.name,
+          category: r.category,
+          currentStock: r.stock,
+          lowStockMin: r.lowStockMin,
+          soldQty: r.soldQty,
+          soldQtyLast90Days: r.soldQty90,
+          sellThroughPercent: `${r.sellThroughPct.toFixed(1)}%`,
+          lastSaleDate: r.lastSaleDate,
+          daysSinceLastSale: r.daysSinceLastSale,
+        })
+      : (s) => ({
+          id: s.id,
+          date: s.date,
+          total: s.total,
+          items: (s.items || []).map((i) => `${i.name} x${i.qty}`).join("; "),
+          user: s.user,
+        });
+
+    return (
+      <div className="grid gap-4">
+        <Card title="Filters" icon={History}>
+          <div className="flex flex-col sm:flex-row sm:items-end gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-3 flex-1">
+              <div className="w-full sm:max-w-[220px]">
+                <NumberInput label="Last N days" value={Number(range)} onChange={(v) => setRange(String(v))} />
+              </div>
+              <label className="block w-full sm:max-w-[200px]">
+                <span className="text-xs text-gray-300">Filter by Date</span>
+                <div className="relative mt-1">
+                  <input
+                    type="date"
+                    className="w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={filterDate}
+                    onChange={(e) => setFilterDate(e.target.value)}
+                  />
+                </div>
+              </label>
+              <label className="block w-full sm:max-w-[280px]">
+                <span className="text-xs text-gray-300">Stock Filter</span>
+                <select
+                  value={stockFilter}
+                  onChange={(e) => setStockFilter(e.target.value)}
+                  className="mt-1 w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="all_sales">All Sales (default)</option>
+                  <option value="halfway_sold">Stocks Halfway Sold</option>
+                  <option value="not_sold_90">Stocks Not Sold in 90 Days</option>
+                  <option value="fast_moving">Fast-Moving / High Demand</option>
+                  <option value="low_stock">Low Stock</option>
+                  <option value="out_of_stock">Out of Stock</option>
+                  <option value="overstock">Overstock</option>
+                </select>
+              </label>
+              <ExportCSV
+                filename={exportFilename}
+                rows={exportRows}
+                mapRow={exportMapRow}
+              />
+            </div>
+          </div>
+          <div className="mt-2 text-xs text-slate-400">
+            N is set to <b>{STALE_DAYS}</b> days (used for Not Sold + Fast-Moving calculations).
+          </div>
+        </Card>
+
+        <Card
+          title={isStockMode ? "Stock Insights" : "Sales"}
+          icon={ShoppingCart}
+          headerRight={(
+            <div className="border border-slate-700 rounded-xl px-4 py-2 bg-[#1E1E1E] text-center min-w-[140px]">
+              <div className="text-[11px] text-slate-400 uppercase tracking-wide">Total Number</div>
+              <div className="text-lg font-semibold">{totalResultCount}</div>
+            </div>
+          )}
+        >
+          {isStockMode ? (
+            <>
+              <div className="sm:hidden grid gap-2">
+                {stockRows.length === 0 ? (
+                  <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">No products match this stock filter.</div>
+                ) : (
+                  stockRows.map((r) => (
+                    <div key={r.id} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                      <div className="font-semibold text-white">{r.name}</div>
+                      <div className="text-xs text-slate-400">{r.category}</div>
+                      <div className="mt-1 text-xs text-slate-300">Current Stock: <span className="text-white">{r.stock}</span> • Sold Qty: <span className="text-white">{r.soldQty}</span></div>
+                      <div className="text-xs text-slate-300">Sold (Last {STALE_DAYS} days): <span className="text-white">{r.soldQty90}</span> • Low Stock Min: <span className="text-white">{r.lowStockMin}</span></div>
+                      <div className="text-xs text-slate-300">Sell-through: <span className="text-white">{r.sellThroughPct.toFixed(1)}%</span></div>
+                      <div className="text-xs text-slate-300">Last Sale: <span className="text-white">{r.lastSaleDate}</span></div>
+                      <div className="text-xs text-slate-300">Days Since Last Sale: <span className="text-white">{r.daysSinceLastSale}</span></div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="hidden sm:block">
+                <Table
+                  columns={[
+                    { key: "name", title: "Product" },
+                    { key: "category", title: "Category" },
+                    { key: "stock", title: "Current Stock" },
+                    { key: "lowStockMin", title: "Low Stock Min" },
+                    { key: "soldQty", title: "Sold Qty" },
+                    { key: "soldQty90", title: `Sold (${STALE_DAYS}d)` },
+                    { key: "sellThroughPct", title: "Sell-through", render: (r) => `${r.sellThroughPct.toFixed(1)}%` },
+                    { key: "lastSaleDate", title: "Last Sale" },
+                    { key: "daysSinceLastSale", title: "Days Since Last Sale" },
+                  ]}
+                  rows={stockRows}
+                  empty="No products match this stock filter."
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="sm:hidden grid gap-2">
+                {filtered.length === 0 ? (
+                  <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">No sales yet</div>
+                ) : (
+                  filtered.map((r) => (
+                    <div key={r.id} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs text-slate-400">{new Date(r.date).toLocaleString()}</div>
+                          <div className="mt-1 text-sm">User: <span className="font-medium text-white">{r.user || "—"}</span></div>
+                        </div>
+                        <div className="text-sm font-semibold whitespace-nowrap text-right">
+                          {state.settings.currency}{fmt(r.total)}
+                        </div>
+                      </div>
+                      <div className="mt-1 text-xs text-slate-300">{(r.items || []).map((i) => `${i.name} x${i.qty}`).join(", ") || "No items"}</div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="hidden sm:block">
+                <Table
+                  columns={[
+                    { key: "date", title: "Date", render: (r) => new Date(r.date).toLocaleString() },
+                    { key: "user", title: "User" },
+                    { key: "items", title: "Items", render: (r) => (r.items || []).map((i) => `${i.name} x${i.qty}`).join(", ") },
+                    { key: "total", title: "Total", render: (r) => `${state.settings.currency}${fmt(r.total)}` },
+                  ]}
+                  rows={filtered}
+                  empty="No sales yet"
+                />
+              </div>
+            </>
+          )}
+        </Card>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Client Sales History
+  // ------------------------------
+  function ClientSalesHistoryPanel({ state }) {
+    const allSales = useMemo(() => state.sales, [state.sales]);
+
+    const [mode, setMode] = useState("date");
+    const [selectedDate, setSelectedDate] = useState(dateOnlyFromISO(nowISO()));
+    const [selectedWeek, setSelectedWeek] = useState(getISOWeekString(new Date()));
+    const [selectedMonth, setSelectedMonth] = useState(`${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,"0")}`);
+
+    const { rows, title } = useMemo(() => {
+      let start = null;
+      let end = null;
+      let titleText = "";
+
+      if (mode === "date") {
+        start = new Date(`${selectedDate}T00:00:00`);
+        end = new Date(`${selectedDate}T23:59:59.999`);
+        titleText = `Sales for ${selectedDate}`;
+      } else if (mode === "week") {
+        const r = getDateRangeFromWeekString(selectedWeek);
+        start = r.start;
+        end = r.end;
+        titleText = `Sales for Week ${selectedWeek}`;
+      } else {
+        const [y, m] = String(selectedMonth || "").split("-");
+        const yr = Number(y);
+        const mo = Number(m) - 1;
+        start = new Date(yr, mo, 1, 0,0,0,0);
+        end = new Date(yr, mo + 1, 0, 23,59,59,999);
+        titleText = `Sales for ${selectedMonth}`;
+      }
+
+      const filtered = allSales.filter((s) => {
+        const d = new Date(s.date);
+        return start && end && d >= start && d <= end;
+      });
+
+      return { rows: filtered.sort((a, b) => new Date(b.date) - new Date(a.date)), title: titleText };
+    }, [mode, selectedDate, selectedWeek, selectedMonth, allSales]);
+
+    const total = rows.reduce((a, s) => a + (Number(s.total) || 0), 0);
+
+    return (
+      <div className="grid gap-4">
+        <Card title="Sales Report Filters" icon={History}>
+          <div className="grid md:grid-cols-4 gap-3">
+            <label className="block">
+              <span className="text-xs text-gray-300">Report Type</span>
+              <select
+                value={mode}
+                onChange={(e) => setMode(e.target.value)}
+                className="mt-1 w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2"
+              >
+                <option value="date">By Date</option>
+                <option value="week">By Week</option>
+                <option value="month">By Month</option>
+              </select>
+            </label>
+
+            {mode === "date" && (
+              <TextInput label="Select Date" type="date" value={selectedDate} onChange={setSelectedDate} />
+            )}
+
+            {mode === "week" && (
+              <TextInput label="Select Week" type="week" value={selectedWeek} onChange={setSelectedWeek} />
+            )}
+
+            {mode === "month" && (
+              <TextInput label="Select Month" type="month" value={selectedMonth} onChange={setSelectedMonth} />
+            )}
+
+            <div className="md:col-span-2 flex items-end">
+              <ExportCSV
+                filename="client-sales-report.csv"
+                rows={rows}
+                mapRow={(s) => ({
+                  id: s.id,
+                  date: s.date,
+                  total: s.total,
+                  items: (s.items || []).map((i) => `${i.name} x${i.qty}`).join("; "),
+                  user: s.user
+                })}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <KPI label="Transactions" value={rows.length} />
+            <KPI label="Total Sales" value={`${state.settings.currency}${fmt(total)}`} />
+          </div>
+
+          <div className="mt-3 text-xs text-slate-400">
+            Default date report is set to today.
+          </div>
+        </Card>
+
+        <Card title={title} icon={ShoppingCart}>
+          <div className="sm:hidden grid gap-2">
+            {rows.length === 0 ? (
+              <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">No sales found for this report.</div>
+            ) : (
+              rows.map((r) => (
+                <div key={r.id} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                  <div className="text-xs text-slate-400">{new Date(r.date).toLocaleString()}</div>
+                  <div className="mt-1 text-sm">User: <span className="font-medium text-white">{r.user || "—"}</span></div>
+                  <div className="mt-1 text-xs text-slate-300">{(r.items || []).map((i) => `${i.name} x${i.qty}`).join(", ") || "No items"}</div>
+                  <div className="mt-2 text-sm font-semibold">Total: {state.settings.currency}{fmt(r.total)}</div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden sm:block">
+            <Table
+              columns={[
+                { key: "date", title: "Date", render: (r) => new Date(r.date).toLocaleString() },
+                { key: "user", title: "User" },
+                { key: "items", title: "Items", render: (r) => (r.items || []).map((i) => `${i.name} x${i.qty}`).join(", ") },
+                { key: "total", title: "Total", render: (r) => `${state.settings.currency}${fmt(r.total)}` },
+              ]}
+              rows={rows}
+              empty="No sales found for this report."
+            />
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  function ExportCSV({ filename, rows, mapRow, className = "" }) {
+    function download() {
+      if (!rows.length) return alert("No data to export");
+      const data = rows.map(mapRow);
+      const headers = Object.keys(data[0] || { example: "no_data" });
+      const csv = [headers.join(","), ...data.map((r) => headers.map((h) => JSON.stringify(r[h] ?? "")).join(","))].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    return (
+      <Button onClick={download} variant="secondary" className={className}>
+        <Download className="w-4 h-4 mr-1" /> Export CSV
+      </Button>
+    );
+  }
+
+  // ------------------------------
+  // Expenses
+  // ------------------------------
+  function ExpensesPanel({ state, setState, onlyMine = false }) {
+    const expenseCategoryOptions = [
+      "Transportation",
+      "Fuel",
+      "Internet/Data",
+      "Electricity/Utilities",
+      "Rent",
+      "Packaging",
+      "Office Supplies",
+      "Repairs/Maintenance",
+      "Marketing/Ads",
+      "Staff Refreshments",
+    ];
+
+    const [form, setForm] = useState({
+      amount: 0,
+      category: expenseCategoryOptions[0],
+      categoryOther: "",
+      note: ""
+    });
+
+    async function addExpense(e) {
+      e.preventDefault();
+      if (!form.amount) return alert("Enter amount");
+
+      const otherText = String(form.categoryOther || "").trim();
+      const finalCategory = form.category === "Others"
+        ? `Others - ${otherText}`
+        : form.category;
+
+      if (!finalCategory) return alert("Please specify category for Others");
+
+      const exp = {
+        id: uid("e"),
+        date: nowISO(),
+        amount: Number(form.amount),
+        category: finalCategory,
+        note: form.note,
+        user: state.currentUser?.username || "unknown"
+      };
+
+      setState((s) => ({ ...s, expenses: [exp, ...s.expenses] }));
+      setForm({ amount: 0, category: expenseCategoryOptions[0], categoryOther: "", note: "" });
+
+      try {
+        await GSSvc.addExpense(exp);
+      } catch (err) {
+        showSyncError("Sync to Database (addExpense)", err);
+      }
+    }
+
+    const visibleExpenses = useMemo(() => {
+      if (!onlyMine) {
+        return [...state.expenses].sort((a, b) => new Date(b.date) - new Date(a.date));
+      }
+      const me = String(state.currentUser?.username || "").toLowerCase();
+      return state.expenses
+        .filter(e => String(e.user || "").toLowerCase() === me)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+    }, [state.expenses, state.currentUser, onlyMine]);
+
+    const total = visibleExpenses.reduce((a, e) => a + (Number(e.amount) || 0), 0);
+
+    return (
+      <div className="grid lg:grid-cols-2 gap-4">
+        <Card title="Record Expense" icon={Wallet}>
+          <form onSubmit={addExpense} className="grid gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <NumberInput label="Amount" step="0.01" value={form.amount} onChange={(v) => setForm((f) => ({ ...f, amount: v }))} />
+              <label className="block">
+                <span className="text-xs text-gray-300">Category</span>
+                <select
+                  value={form.category}
+                  onChange={(e) => setForm((f) => ({ ...f, category: e.target.value, categoryOther: e.target.value === "Others" ? f.categoryOther : "" }))}
+                  className="mt-1 w-full rounded-xl border border-slate-600 bg-[#1E1E1E] text-white px-3 py-2"
+                >
+                  {expenseCategoryOptions.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                  <option value="Others">Others</option>
+                </select>
+              </label>
+              <TextInput label="Note" value={form.note} onChange={(v) => setForm((f) => ({ ...f, note: v }))} />
+            </div>
+
+            {form.category === "Others" && (
+              <TextInput
+                label="Specify Category"
+                value={form.categoryOther}
+                onChange={(v) => setForm((f) => ({ ...f, categoryOther: v }))}
+                placeholder="Enter custom expense category"
+              />
+            )}
+            <Button type="submit" title="Add Expense" />
+          </form>
+        </Card>
+
+        <Card title={`Expenses • Total: ${state.settings.currency}${fmt(total)}`} icon={FileText}>
+          <div className="sm:hidden grid gap-2">
+            {visibleExpenses.length === 0 ? (
+              <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3">No expenses yet</div>
+            ) : (
+              visibleExpenses.map((r) => (
+                <div key={r.id} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E]">
+                  <div className="text-xs text-slate-400">{new Date(r.date).toLocaleString()}</div>
+                  <div className="mt-1 text-sm">User: <span className="font-medium text-white">{r.user || "—"}</span></div>
+                  <div className="mt-1 text-sm">Category: <span className="text-white">{r.category || "—"}</span></div>
+                  <div className="mt-1 text-xs text-slate-300">{r.note || "No note"}</div>
+                  <div className="mt-2 text-sm font-semibold">Amount: {state.settings.currency}{fmt(r.amount)}</div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden sm:block">
+            <Table
+              columns={[
+                { key: "date", title: "Date", render: (r) => new Date(r.date).toLocaleString() },
+                { key: "user", title: "User" },
+                { key: "category", title: "Category" },
+                { key: "note", title: "Note" },
+                { key: "amount", title: "Amount", render: (r) => `${state.settings.currency}${fmt(r.amount)}` },
+              ]}
+              rows={visibleExpenses}
+              empty="No expenses yet"
+            />
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Reports
+  // ------------------------------
+  function ReportsPanel({ state, setState }) {
+    const monthlySalesChartRef = useRef(null);
+    const monthlyProfitChartRef = useRef(null);
+
+    const monthlyMap = {};
+    state.sales.forEach(s => {
+      const d = new Date(s.date);
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+      if(!monthlyMap[key]) monthlyMap[key] = { revenue:0, cogs:0 };
+      monthlyMap[key].revenue += s.total;
+      (s.items||[]).forEach(i => {
+        monthlyMap[key].cogs += i.qty * (i.cost||0);
+      });
+    });
+
+    const months = Object.keys(monthlyMap).sort();
+    const monthlyRevenue = months.map(m => monthlyMap[m].revenue);
+    const monthlyProfit = months.map(m => monthlyMap[m].revenue - monthlyMap[m].cogs);
+
+    useEffect(() => {
+      if(!monthlySalesChartRef.current || !monthlyProfitChartRef.current) return;
+
+      Chart.getChart(monthlySalesChartRef.current)?.destroy();
+      Chart.getChart(monthlyProfitChartRef.current)?.destroy();
+
+      new Chart(monthlySalesChartRef.current, {
+        type:"bar",
+        data:{ labels:months, datasets:[{ label:"Monthly Sales", data:monthlyRevenue }] },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      new Chart(monthlyProfitChartRef.current, {
+        type:"bar",
+        data:{ labels:months, datasets:[{ label:"Monthly Profit", data:monthlyProfit }] },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }, [state.sales]);
+
+    const [yearForm, setYearForm] = useState({ year:"", revenue:0, cogs:0, expenses:0 });
+
+    async function addYear(){
+      if(!yearForm.year){ alert("Enter year"); return; }
+      const newYear = { id: uid("y"), year: yearForm.year, revenue: Number(yearForm.revenue), cogs: Number(yearForm.cogs), expenses: Number(yearForm.expenses) };
+      let nextYears;
+      setState(s => { nextYears = [...(s.historicalYears || []), newYear]; return { ...s, historicalYears: nextYears }; });
+      try{ await GSSvc.saveYears(nextYears); alert("Year saved to Database"); }catch(err){ console.error(err); alert("Save to Database Failed"); }
+      setYearForm({ year:"", revenue:0, cogs:0, expenses:0 });
+    }
+
+    const historical = state.historicalYears || [];
+    const pastRevenue = historical.reduce((a,y)=>a+y.revenue,0);
+    const pastCOGS = historical.reduce((a,y)=>a+y.cogs,0);
+    const pastExpenses = historical.reduce((a,y)=>a+y.expenses,0);
+
+    const inventoryRows = state.products.map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category,
+      price: p.price,
+      cost: p.cost || 0,
+      stock: p.stock,
+      value: (p.price || 0) * (p.stock || 0),
+      createdAt: p.createdAt || "",
+      updatedAt: p.updatedAt || "",
+    }));
+    const inventoryValue = inventoryRows.reduce((a, r) => a + r.value, 0);
+
+    const revenue = state.sales.reduce((a, s) => a + s.total, 0);
+    const cogs = state.sales.reduce((acc, s) => acc + (s.items || []).reduce((aa, it) => aa + (it.qty * (it.cost || 0)), 0), 0);
+    const salesProfit = revenue - cogs;
+    const expenseTotal = state.expenses.reduce((a, e) => a + (Number(e.amount) || 0), 0);
+    const netProfit = salesProfit - expenseTotal;
+
+    const lifetimeRevenue = revenue + pastRevenue;
+    const lifetimeCOGS = cogs + pastCOGS;
+    const lifetimeExpenses = expenseTotal + pastExpenses;
+    const lifetimeProfit = (lifetimeRevenue - lifetimeCOGS) - lifetimeExpenses;
+
+    const purchasesMap = {};
+    state.products.forEach(prod => {
+      (prod.stockHistory || []).forEach(h => {
+        const qty = Number(h.qtyChange) || 0;
+        if (qty <= 0) return;
+        const purchaseDate = (h.purchaseDate || dateOnlyFromISO(h.dateTime) || "").trim();
+        if (!purchaseDate) return;
+
+        const unitCost = Number(h.unitCost);
+        const fallbackUnitCost = Number.isFinite(unitCost) ? unitCost : (Number(prod.cost) || 0);
+        const totalCost = Number.isFinite(Number(h.totalCost)) ? Number(h.totalCost) : (qty * fallbackUnitCost);
+
+        if (!purchasesMap[purchaseDate]) purchasesMap[purchaseDate] = { date: purchaseDate, qty: 0, amount: 0, lines: 0 };
+        purchasesMap[purchaseDate].qty += qty;
+        purchasesMap[purchaseDate].amount += totalCost;
+        purchasesMap[purchaseDate].lines += 1;
+      });
+    });
+
+    const purchaseRows = Object.values(purchasesMap).sort((a,b)=> (a.date < b.date ? 1 : -1));
+
+    function exportPurchasesCSV() {
+      if (!purchaseRows.length) return alert("No purchase data to export");
+      const csv = csvStringify(purchaseRows.map(r => ({
+        purchaseDate: r.date,
+        totalQty: r.qty,
+        totalAmount: r.amount,
+        entries: r.lines
+      })));
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "stock_purchases_by_date.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    return (
+      <div className="grid gap-3 sm:gap-4 min-w-0">
+        <Card title="Inventory Report" icon={Package} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="mb-2 text-sm break-words">Total inventory value: <b>{state.settings.currency}{fmt(inventoryValue)}</b></div>
+          <ExportCSV filename="inventory.csv" rows={inventoryRows} mapRow={(r) => r} className="w-full sm:w-auto justify-center" />
+        </Card>
+
+        <Card title="Stock Purchases Report (By Date of Purchase)" icon={History} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="text-xs text-slate-400 mb-2">
+            Totals are calculated from Stock History entries where stock was added (qty change &gt; 0).
+          </div>
+          <div className="flex flex-wrap gap-2 mb-3 justify-center sm:justify-start">
+            <Button variant="secondary" onClick={exportPurchasesCSV} className="w-full sm:w-auto justify-center">
+              <Download className="w-4 h-4 mr-1" /> Export Purchases CSV
+            </Button>
+          </div>
+          <div className="sm:hidden grid gap-2 text-center">
+            {purchaseRows.length === 0 ? (
+              <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3 text-center">
+                No purchase entries yet. Add stock with a purchase date in Edit Product.
+              </div>
+            ) : (
+              purchaseRows.map((r) => (
+                <div key={r.date} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E] text-center">
+                  <div className="font-semibold">{r.date}</div>
+                  <div className="mt-1 text-xs text-slate-300">Total Qty: {r.qty}</div>
+                  <div className="text-xs text-slate-300">Entries: {r.lines}</div>
+                  <div className="mt-2 text-sm font-semibold">Amount: {state.settings.currency}{fmt(r.amount)}</div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden sm:block">
+            <Table
+              columns={[
+                { key: "date", title: "Purchase Date" },
+                { key: "qty", title: "Total Qty" },
+                { key: "amount", title: "Total Amount", render: (r) => `${state.settings.currency}${fmt(r.amount)}` },
+                { key: "lines", title: "Entries" },
+              ]}
+              rows={purchaseRows}
+              empty="No purchase entries yet. Add stock with a purchase date in Edit Product."
+            />
+          </div>
+        </Card>
+
+        <Card title="Profit Summary" icon={Wallet} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 text-center">
+            <KPI label="Revenue" value={`${state.settings.currency}${fmt(revenue)}`} />
+            <KPI label="COGS" value={`${state.settings.currency}${fmt(cogs)}`} />
+            <KPI label="Sales Profit" value={`${state.settings.currency}${fmt(salesProfit)}`} />
+            <KPI label="Net Profit" value={`${state.settings.currency}${fmt(netProfit)}`} />
+          </div>
+          <div className="text-xs text-slate-400 mt-2 text-center">
+            Net Profit = Sales Profit − Expenses ({state.settings.currency}{fmt(expenseTotal)})
+          </div>
+        </Card>
+
+        <Card title="Historical Summary" icon={History} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 text-center">
+            <KPI label="Revenue" value={`${state.settings.currency}${fmt(pastRevenue)}`} />
+            <KPI label="COGS" value={`${state.settings.currency}${fmt(pastCOGS)}`} />
+            <KPI label="Expenses" value={`${state.settings.currency}${fmt(pastExpenses)}`} />
+            <KPI label="Profit" value={`${state.settings.currency}${fmt(pastRevenue - pastCOGS - pastExpenses)}`} />
+          </div>
+        </Card>
+
+        <Card title="Lifetime Summary" icon={Wallet} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 text-center">
+            <KPI label="Revenue" value={`${state.settings.currency}${fmt(lifetimeRevenue)}`} />
+            <KPI label="COGS" value={`${state.settings.currency}${fmt(lifetimeCOGS)}`} />
+            <KPI label="Expenses" value={`${state.settings.currency}${fmt(lifetimeExpenses)}`} />
+            <KPI label="Profit" value={`${state.settings.currency}${fmt(lifetimeProfit)}`} />
+          </div>
+        </Card>
+
+        <Card title="Add Previous Year" icon={History} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+            <TextInput label="Year" value={yearForm.year} onChange={(v)=>setYearForm(f=>({...f,year:v}))}/>
+            <NumberInput label="Revenue" value={yearForm.revenue} onChange={(v)=>setYearForm(f=>({...f,revenue:v}))}/>
+            <NumberInput label="COGS" value={yearForm.cogs} onChange={(v)=>setYearForm(f=>({...f,cogs:v}))}/>
+            <NumberInput label="Expenses" value={yearForm.expenses} onChange={(v)=>setYearForm(f=>({...f,expenses:v}))}/>
+          </div>
+          <div className="mt-3">
+            <Button onClick={addYear}>Save Year</Button>
+          </div>
+        </Card>
+
+        <Card title="Historical Years" icon={FileText} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="sm:hidden grid gap-2 text-center">
+            {historical.length === 0 ? (
+              <div className="text-sm text-slate-400 border border-slate-700 rounded-xl p-3 text-center">No historical years yet</div>
+            ) : (
+              historical.map((y) => (
+                <div key={y.id || y.year} className="border border-slate-700 rounded-xl p-3 bg-[#1E1E1E] text-center">
+                  <div className="font-semibold">Year: {y.year}</div>
+                  <div className="mt-1 text-xs text-slate-300">Revenue: {state.settings.currency}{fmt(y.revenue)}</div>
+                  <div className="text-xs text-slate-300">COGS: {state.settings.currency}{fmt(y.cogs)}</div>
+                  <div className="text-xs text-slate-300">Expenses: {state.settings.currency}{fmt(y.expenses)}</div>
+                  <div className="mt-2 text-sm font-semibold">Profit: {state.settings.currency}{fmt(y.revenue - y.cogs - y.expenses)}</div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden sm:block">
+            <Table
+              columns={[
+                {key:"year",title:"Year"},
+                {key:"revenue",title:"Revenue"},
+                {key:"cogs",title:"COGS"},
+                {key:"expenses",title:"Expenses"},
+                {key:"profit",title:"Profit"}
+              ]}
+              rows={historical.map(y=>({
+                year:y.year,
+                revenue:`${state.settings.currency}${fmt(y.revenue)}`,
+                cogs:`${state.settings.currency}${fmt(y.cogs)}`,
+                expenses:`${state.settings.currency}${fmt(y.expenses)}`,
+                profit:`${state.settings.currency}${fmt(y.revenue-y.cogs-y.expenses)}`
+              }))}
+            />
+          </div>
+        </Card>
+
+        <Card title="Monthly Sales Chart" icon={BarChart3} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="w-full h-64 sm:h-80">
+            <canvas ref={monthlySalesChartRef} className="w-full h-full"></canvas>
+          </div>
+        </Card>
+
+        <Card title="Monthly Profit Chart" icon={Wallet} className="min-w-0 overflow-hidden p-3 sm:p-5">
+          <div className="w-full h-64 sm:h-80">
+            <canvas ref={monthlyProfitChartRef} className="w-full h-full"></canvas>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Client App
+  // ------------------------------
+  function ClientApp({ state, setState }) {
+    const [tab, setTab] = useState("dashboard");
+    const [cartBadgeCount, setCartBadgeCount] = useState(() => getCartDraftItemCount(state.currentUser?.username));
+    const me = String(state.currentUser?.username || "").toLowerCase();
+
+    const allSales = useMemo(() => state.sales, [state.sales]);
+
+    const myExpenses = useMemo(
+      () => state.expenses.filter(e => String(e.user || "").toLowerCase() === me),
+      [state.expenses, me]
+    );
+
+    const dailySales = useMemo(() => {
+      const start = startOfToday();
+      return allSales.filter(s => new Date(s.date) >= start).reduce((a, s) => a + (Number(s.total) || 0), 0);
+    }, [allSales]);
+
+    const weeklySales = useMemo(() => {
+      const start = startOfWeek();
+      const end = endOfWeek();
+      return allSales
+        .filter(s => {
+          const d = new Date(s.date);
+          return d >= start && d <= end;
+        })
+        .reduce((a, s) => a + (Number(s.total) || 0), 0);
+    }, [allSales]);
+
+    const monthlySales = useMemo(() => {
+      const start = startOfMonth();
+      const end = endOfMonth();
+      return allSales
+        .filter(s => {
+          const d = new Date(s.date);
+          return d >= start && d <= end;
+        })
+        .reduce((a, s) => a + (Number(s.total) || 0), 0);
+    }, [allSales]);
+
+    const myExpenseTotal = useMemo(
+      () => myExpenses.reduce((a, e) => a + (Number(e.amount) || 0), 0),
+      [myExpenses]
+    );
+
+   
+    const totals = useMemo(() => {
+    const lowStock = state.products.filter(
+      (p) => (p.stock || 0) <= (p.lowStock || state.settings.lowStockDefault)
+    );
+
+    return { lowStock };
+  }, [state.products, state.settings.lowStockDefault]);
+
+    useEffect(() => {
+      function refreshCount() {
+        setCartBadgeCount(getCartDraftItemCount(state.currentUser?.username));
+      }
+      refreshCount();
+      window.addEventListener("cart-draft-updated", refreshCount);
+      window.addEventListener("focus", refreshCount);
+      return () => {
+        window.removeEventListener("cart-draft-updated", refreshCount);
+        window.removeEventListener("focus", refreshCount);
+      };
+    }, [state.currentUser?.username]);
+
+
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        <nav className="grid grid-cols-2 gap-2 mb-4 sm:flex sm:flex-wrap">
+          <TabButton icon={BarChart3} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
+          <TabButton
+            icon={ShoppingCart}
+            label={
+              <span className="inline-flex items-center gap-2">
+                <span>Record Sale</span>
+                {cartBadgeCount > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-yellow-300 text-black text-[11px] font-bold">
+                    {cartBadgeCount}
+                  </span>
+                )}
+              </span>
+            }
+            active={tab === "sell"}
+            onClick={() => setTab("sell")}
+          />
+          <TabButton icon={Wallet} label="Expenses" active={tab === "expenses"} onClick={() => setTab("expenses")} />
+          <TabButton icon={History} label="Sales History" active={tab === "sales"} onClick={() => setTab("sales")} />
+        </nav>
+
+        {tab === "dashboard" && (
+          <div className="grid gap-4">
+            <Card title="Dashboard Overview" icon={Wallet}>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <KPI label="Daily Sales" value={`${state.settings.currency}${fmt(dailySales)}`} />
+                <KPI label="Weekly Sales" value={`${state.settings.currency}${fmt(weeklySales)}`} />
+                <KPI label="Monthly Sales" value={`${state.settings.currency}${fmt(monthlySales)}`} />
+                <KPI label="My Expenses" value={`${state.settings.currency}${fmt(myExpenseTotal)}`} />
+              </div>
+            </Card>
+
+            <Card title="Low Stock Alerts" icon={AlertTriangle} className="md:col-span-2">
+              <div className="text-xs text-slate-400 mb-2">
+                Showing <b>{totals.lowStock.length}</b> item(s) that are low or out of stock.
+              </div>
+
+              <Table
+                columns={[
+                  { key: "name", title: "Product" },
+                  { key: "stock", title: "Stock" },
+                  { key: "low", title: "Min" },
+                ]}
+                rows={totals.lowStock.map((p) => ({
+                  name: p.name,
+                  stock: p.stock,
+                  low: p.lowStock || state.settings.lowStockDefault
+                }))}
+                empty="No low stock items"
+              />
+            </Card>
+          </div>
+        )}
+
+        {tab === "sell" && <RecordSalePanel state={state} setState={setState} forceTodayDefault={true} />}
+        {tab === "expenses" && <ExpensesPanel state={state} setState={setState} onlyMine={true} />}
+        {tab === "sales" && <ClientSalesHistoryPanel state={state} />}
+      </div>
+    );
+  }
+
+  // ------------------------------
+  // Smoke tests
+  // ------------------------------
+  (function existenceTests() {
+    console.assert(typeof AdminApp === "function", "AdminApp should be defined");
+    console.assert(typeof ClientApp === "function", "ClientApp should be defined");
+    const btn = Button({ title: "Test", onClick: () => {} });
+    console.assert(!!btn, "Button returns an element");
+  })();
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<App />);
+  </script>
+</body>
+</html>
